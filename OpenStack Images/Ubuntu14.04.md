@@ -43,4 +43,4 @@ virt-sysprep -d U.1404.img
 ```
 virt-sparsify --compress U.1404.img U.1404.shrink.img
 ```
-#####Image <>bU.1404.shrink.img</b> đã có thể upload lên Glance
+#####Image <b>U.1404.shrink.img</b> đã có thể upload lên Glance
