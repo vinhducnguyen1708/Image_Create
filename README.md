@@ -2,7 +2,7 @@
 
 [Tạo Image Ubuntu14.04](https://github.com/longsube/Image_Create/blob/master/OpenStack%20Images/Ubuntu14.04.md)
 
-[Tạo Image Ubuntu12.04]
+[Tạo Image Ubuntu12.04](https://github.com/longsube/Image_Create/blob/master/OpenStack%20Images/Ubuntu12.04.md)
 
 [Tạo Image CentOS]
 
