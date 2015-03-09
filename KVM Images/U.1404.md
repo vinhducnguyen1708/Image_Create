@@ -1,7 +1,6 @@
 ##Bước tạo máy ảo bằng KVM mình sẽ bỏ qua và đi ngay vào phần xử lý image sau khi đã cài xong OS
 ##1. Xử lý phần OS của máy ảo
-###Để sau khi boot máy ảo, có thể nhận đủ các NIC gắn vào, ta viết đoạn script sau:
-vi /etc/boot/NIC.sh
+###Để sau khi boot máy ảo, có thể nhận đủ các NIC gắn vào, tạo một script tại `/etc/boot/NIC.sh` với nội dung:
 ```
 for iface in $(ip -o link | cut -d: -f2 | tr -d ' ' | grep ^eth)
 do

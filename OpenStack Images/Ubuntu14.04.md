@@ -4,8 +4,7 @@
 ```
 apt-get install cloud-utils cloud-initramfs-growroot cloud-init -y
 ```
-###Để sau khi boot máy ảo, có thể nhận đủ các NIC gắn vào, ta viết đoạn script sau:
-vi /etc/boot/NIC.sh
+###Để sau khi boot máy ảo, có thể nhận đủ các NIC gắn vào, tạo một script tại `/etc/boot/NIC.sh` với nội dung:
 ```
 for iface in $(ip -o link | cut -d: -f2 | tr -d ' ' | grep ^eth)
 do
