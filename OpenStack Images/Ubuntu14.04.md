@@ -25,13 +25,15 @@ exit 0
 ```
 GRUB_DEFAULT=0
 #GRUB_HIDDEN_TIMEOUT=0
-#GRUB_HIDDEN_TIMEOUT_QUIET=true
-GRUB_TIMEOUT=5
+GRUB_HIDDEN_TIMEOUT_QUIET=true
+GRUB_TIMEOUT=2
 GRUB_DISTRIBUTOR=`lsb_release -i -s 2> /dev/null || echo Debian`
-GRUB_CMDLINE_LINUX_DEFAULT="console=ttyS0"
-GRUB_CMDLINE_LINUX=""
+GRUB_CMDLINE_LINUX_DEFAULT=""
+GRUB_CMDLINE_LINUX="console=tty0 console=ttyS0,115200n8"
 ```
-###Xóa toàn bộ các thông tin về địa chỉ MAC của card mạng ảo ở:
+Sau đó chạy lệnh
+`update-grub`
+###Xóa toàn bộ các thông tin về địa chỉ MAC của card mạng ảo:
 ```
 /etc/sysconfig/network-scripts/ifcfg-eth0 
 /etc/udev/rules.d/70-persistent-net.rules
@@ -46,7 +48,7 @@ init 0
 ##2.Xử lý Image 
 ###Xử dụng lệnh `virt-sysprep` để xóa toàn bộ các thông tin máy ảo:
 ```
-virt-sysprep -d U.1404.img
+virt-sysprep -a U.1404.img
 ```
 ###Dùng lệnh sau để tối ưu kích thước image:
 ```
