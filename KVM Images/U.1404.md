@@ -60,5 +60,5 @@ virt-sparsify --compress U.1404.img U.1404.shrink.img
 ##3. Boot máy ảo từ image
 ###Sau khi boot máy ảo, cần reinstall lại openssh để có thể SSh tới máy ảo
 ```
-apt-get install --reinstall openssh-server openssh-clients -y
+apt-get install --reinstall openssh-server openssh-client -y
 ```
