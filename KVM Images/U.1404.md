@@ -50,10 +50,15 @@ init 0
 #####Xử dụng lệnh ```virt-sysprep``` để xóa toàn bộ các thông tin máy ảo:
 ```
 virt-sysprep -a U.1404.img
+Nếu máy ảo không sử dụng LVM
 ```
 #####Dùng lệnh sau để tối ưu kích thước image:
 ```
 virt-sparsify --compress U.1404.img U.1404.shrink.img
+```
+Nếu máy ảo sử dụng LVM
+```
+qemu-img convert -c -f qcow2 -O qcow2 U.1404.img U.1404.shrink.img
 ```
 #####Image <>bU.1404.shrink.img</b> đã có thể sử dụng để clone ra các máy ảo khác
 

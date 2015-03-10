@@ -1,4 +1,5 @@
 ##Bước tạo máy ảo bằng KVM mình sẽ bỏ qua và đi ngay vào phần xử lý image sau khi đã cài xong OS
+####<i>Chú ý: Khi tạo image không sử dụng LVM để có thể resize lại partition theo flavor</i>
 ##1. Xử lý phần OS của máy ảo
 #####Để máy ảo khi boot sẽ tự giãn phân vùng theo dung lượng mới, ta cài các gói sau:
 ```
