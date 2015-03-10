@@ -53,6 +53,7 @@ virt-sysprep -a U.1404.img
 Nếu máy ảo không sử dụng LVM
 ```
 #####Dùng lệnh sau để tối ưu kích thước image:
+Nếu máy ảo không sử dụng LVM
 ```
 virt-sparsify --compress U.1404.img U.1404.shrink.img
 ```
@@ -60,7 +61,7 @@ Nếu máy ảo sử dụng LVM
 ```
 qemu-img convert -c -f qcow2 -O qcow2 U.1404.img U.1404.shrink.img
 ```
-#####Image <>bU.1404.shrink.img</b> đã có thể sử dụng để clone ra các máy ảo khác
+#####Image <b>U.1404.shrink.img</b> đã có thể sử dụng để clone ra các máy ảo khác
 
 ##3. Boot máy ảo từ image
 #####Sau khi boot máy ảo, cần reinstall lại openssh để có thể SSh tới máy ảo
