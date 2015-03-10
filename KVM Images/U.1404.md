@@ -50,7 +50,6 @@ init 0
 #####Xử dụng lệnh ```virt-sysprep``` để xóa toàn bộ các thông tin máy ảo:
 ```
 virt-sysprep -a U.1404.img
-Nếu máy ảo không sử dụng LVM
 ```
 #####Dùng lệnh sau để tối ưu kích thước image:
 Nếu máy ảo không sử dụng LVM
