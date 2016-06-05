@@ -7,7 +7,7 @@ apt-get install parted -y
 ```
 #####1.2 Đặt script sau tại `/root/partresize.sh`, chạy sau khi boot máy ảo để phân vùng lại LVM:
 ```
-wget partresize.sh
+wget https://raw.githubusercontent.com/longsube/Image_Create/master/OpenStack%20Images/partresize.sh
 ```
 
 #####1.3 Để sau khi boot máy ảo, có thể nhận đủ các NIC gắn vào, tạo một script tại `/etc/boot/NIC.sh` với nội dung:
