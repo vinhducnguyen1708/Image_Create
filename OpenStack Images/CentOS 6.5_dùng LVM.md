@@ -82,7 +82,7 @@ virt-sysprep -a CentOS65.img
 sudo virt-sparsify --compress CentOS65.img CentOS65_shrink.img
 ```
 
-##4. Upload lên glance##
+#####2.4. Upload lên glance##
 Qúa trình tạo template đã xong, bạn upload file centos6.5.cloud.qcow2 lên Openstack là có thể sử dụng được.
 
 ##3. Boot máy ảo (Trên OpenStack)
