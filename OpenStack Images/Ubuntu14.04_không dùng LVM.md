@@ -1,11 +1,11 @@
 ##Bước tạo máy ảo bằng KVM mình sẽ bỏ qua và đi ngay vào phần xử lý image sau khi đã cài xong OS
 ####<i>Chú ý: Khi tạo image không sử dụng LVM để có thể resize lại partition theo flavor</i>
 ##1. Xử lý phần OS của máy ảo
-#####Để máy ảo khi boot sẽ tự giãn phân vùng theo dung lượng mới, ta cài các gói sau:
+#####1.1 Để máy ảo khi boot sẽ tự giãn phân vùng theo dung lượng mới, ta cài các gói sau:
 ```
 apt-get install cloud-utils cloud-initramfs-growroot cloud-init -y
 ```
-#####Để sau khi boot máy ảo, có thể nhận đủ các NIC gắn vào, tạo một script tại `/etc/boot/NIC.sh` với nội dung:
+#####1.2 Để sau khi boot máy ảo, có thể nhận đủ các NIC gắn vào, tạo một script tại `/etc/boot/NIC.sh` với nội dung:
 ```
 for iface in $(ip -o link | cut -d: -f2 | tr -d ' ' | grep ^eth)
 do
@@ -17,12 +17,12 @@ do
    fi
 done
 ```
-#####Sau đó sửa file `/etc/rc.local` để chạy script tự động khi máy ảo được boot
+#####1.3 Sau đó sửa file `/etc/rc.local` để chạy script tự động khi máy ảo được boot
 ```
 bash /etc/boot/NIC.sh
 exit 0
 ```
-#####Chỉnh sửa file `/etc/default/grub` để bắn log ra trong quá trình tạo máy ảo
+#####1.4 Chỉnh sửa file `/etc/default/grub` để bắn log ra trong quá trình tạo máy ảo
 ```
 GRUB_DEFAULT=0
 #GRUB_HIDDEN_TIMEOUT=0
@@ -34,7 +34,7 @@ GRUB_CMDLINE_LINUX="console=tty0 console=ttyS0,115200n8"
 ```
 Sau đó chạy lệnh
 `update-grub`
-#####Xóa toàn bộ các thông tin về địa chỉ MAC của card mạng ảo:
+#####1.5 Xóa toàn bộ các thông tin về địa chỉ MAC của card mạng ảo:
 ```
 /etc/sysconfig/network-scripts/ifcfg-eth0 
 /etc/udev/rules.d/70-persistent-net.rules
@@ -47,12 +47,12 @@ init 0
 ```
 
 ##2.Xử lý Image 
-#####Xử dụng lệnh `virt-sysprep` để xóa toàn bộ các thông tin máy ảo:
+#####2.1 Xử dụng lệnh `virt-sysprep` để xóa toàn bộ các thông tin máy ảo:
 ```
 virt-sysprep -a U.1404.img
 ```
-#####Dùng lệnh sau để tối ưu kích thước image:
+#####2.2 Dùng lệnh sau để tối ưu kích thước image:
 ```
 virt-sparsify --compress U.1404.img U.1404.shrink.img
 ```
-#####Image <b>U.1404.shrink.img</b> đã có thể upload lên Glance
+#####2.3 Image <b>U.1404.shrink.img</b> đã có thể upload lên Glance
