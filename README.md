@@ -10,7 +10,7 @@
 
 [Tạo Image Ubuntu12.04, không sử dụng LVM](https://github.com/longsube/Image_Create/blob/master/OpenStack%20Images/Ubuntu12.04_kh%C3%B4ng%20d%C3%B9ng%20LVM.md)
 
-[Tạo Image cho Windows 2k8 R2]
+[Tạo Image cho Windows 2k12 R2](https://github.com/longsube/Image_Create/blob/master/OpenStack%20Images/Windows2K12R2.md)
 
 
 
