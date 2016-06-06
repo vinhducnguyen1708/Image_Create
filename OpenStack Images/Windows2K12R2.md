@@ -29,7 +29,7 @@ sudo virt-manager
 ![Windows Setup UI](http://image.prntscr.com/image/8dfb8adeff624935b3f978588dd3e69b.png)
 
 #####1.5  Browse tới driver để VM nhận ổ đĩa (nằm tại virtio-win-0.1.1/viostor/2K12R2/amd64)
-![Browse tới disk driver](hhttp://image.prntscr.com/image/128a1463af9a4208b90a32c43fa8b89b.png)
+![Browse tới disk driver](http://image.prntscr.com/image/128a1463af9a4208b90a32c43fa8b89b.png)
 ![Disk Driver](http://image.prntscr.com/image/5bd0f8014b9c400fa434153dc165628e.png)
 
 #####1.6 Tiến hành cài đặt OS
@@ -38,22 +38,22 @@ sudo virt-manager
 ##2. Xử lý image sau khi đã cài xong OS
 #####2.1 Cài đặt Baloon network driver để VM nhận card mạng
 ![Cài Baloon Network Driver](http://image.prntscr.com/image/e9e8b1d48cd9477d96bade6617fc35cf.png)
-(http://image.prntscr.com/image/5380d086290a42379b977bc8edc3485e.png)
+![Cài Baloon Network Driver](http://image.prntscr.com/image/5380d086290a42379b977bc8edc3485e.png)
 
 #####2.2 Cài đặt Baloon driver cho Memory
 Copy `/virtio-win-0.1.1/Baloon/2k12R2/amd64` từ CD Drive vào `C:\`
-(http://image.prntscr.com/image/cf9fb6dd762b46aea44c0f5e8cf8f0d7.png)
+![Cài Baloon Memort Driver](http://image.prntscr.com/image/cf9fb6dd762b46aea44c0f5e8cf8f0d7.png)
 Chạy CMD, trỏ về thư mục amd64 vừa copy và chạy lệnh:
 ```
 C:\amd64> .\blnsvr.exe -i
 ```
-(http://image.prntscr.com/image/09967912faac49e98b683cbc8814d763.png)
+![Cài Baloon Memort Driver](http://image.prntscr.com/image/09967912faac49e98b683cbc8814d763.png)
 Kiểm tra trong services.msc
-(http://image.prntscr.com/image/9106fec50a0644e8b5abea1f910e8542.png)
+![Cài Baloon Memort Driver](http://image.prntscr.com/image/9106fec50a0644e8b5abea1f910e8542.png)
 
 #####2.3 Cài đặt cloud-init bản mới nhất
 Download cloud tại [đây] (https://cloudbase.it/cloudbase-init/)
-(http://image.prntscr.com/image/d96ea3f6c39444bc8d321d3290dc1f98.png)
+![Cài Cloud init](http://image.prntscr.com/image/d96ea3f6c39444bc8d321d3290dc1f98.png)
 Trước khi "Finish" cài đặt, sửa lại file `C:\Program Files\Cloudbase Solutions\Cloudbase-Init\conf`
 ```
 [DEFAULT]
@@ -77,7 +77,7 @@ ntp_use_dhcp_config=true
 local_scripts_path=C:\Program Files\Cloudbase Solutions\Cloudbase-Init\LocalScripts\
 ```
 Enable Sysprep và shutdown máy
-(http://image.prntscr.com/image/3930d59815f44c8d984a262de6cb5455.png)
+![Cài Cloud init](http://image.prntscr.com/image/3930d59815f44c8d984a262de6cb5455.png)
 
 ##2.Xử lý Image 
 #####2.1 Dùng lệnh sau để tối ưu kích thước image:
