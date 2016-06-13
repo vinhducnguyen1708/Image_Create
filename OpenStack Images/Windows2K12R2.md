@@ -85,4 +85,6 @@ Enable Sysprep và shutdown máy
 virt-sparsify --compress win2012R2.img win2012R2.shrink.img
 ```
 #####2.2 Image <b>win2012R2.shrink.img</b> đã có thể upload lên Glance
+
+Tham khảo: http://www.stratoscale.com/blog/storage/deploying-ceph-challenges-solutions/?utm_source=twitter&utm_medium=social&utm_campaign=blog_deploying-ceph-challenges-solutions
  

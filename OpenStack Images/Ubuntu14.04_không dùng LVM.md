@@ -36,8 +36,8 @@ Sau đó chạy lệnh
 `update-grub`
 #####1.5 Xóa toàn bộ các thông tin về địa chỉ MAC của card mạng ảo:
 ```
-/etc/sysconfig/network-scripts/ifcfg-eth0 
 /etc/udev/rules.d/70-persistent-net.rules
+/lib/udev/rules.d/75-persistent-net-generator.rules
 ```
 Chú ý: không xóa 2 file này mà chỉ xóa nội dung 
 
