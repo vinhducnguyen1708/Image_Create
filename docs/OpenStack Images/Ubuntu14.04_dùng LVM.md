@@ -83,7 +83,7 @@ virt-sparsify --compress U.1404.img U.1404.shrink.img
 ##### 3.1 Sau khi Login vào máy ảo, kiểm tra dung lượng LVM:
 ![Kích thước LV](http://image.prntscr.com/image/35eaf4c55f9c4e7398083fa28551ccee.jpg)
 
-#####3.2 Chạy đoạn Script để tăng kích thước LV:
+##### 3.2 Chạy đoạn Script để tăng kích thước LV:
 ![Script resize LV](http://image.prntscr.com/image/4288388e712b45cb90e734ed00420421.jpg)
 #### Các thông số:
 - `-p`: chỉ định phân vùng vật lý đặt LV cần resize
