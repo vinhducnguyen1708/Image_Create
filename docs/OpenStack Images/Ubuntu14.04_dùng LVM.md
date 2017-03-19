@@ -53,7 +53,12 @@ Sửa `/etc/cloud/cloud.cfg` để password hoặc SSH key chèn vào user root:
 disable_root: false
 ```
 
-##### 1.8 Tắt máy ảo 
+##### 1.8 Disable default config route
+```
+Comment dòng `link-local 169.254.0.0` trong `/etc/networks`
+```
+
+##### Tắt máy ảo 
 ```
 init 0
 ```

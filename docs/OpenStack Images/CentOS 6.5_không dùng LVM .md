@@ -2,7 +2,7 @@
 #### <i>Chú ý: Hướng dẫn này dành cho các image không sử dụng LVM</i>
 ## 1. Xử lý phần OS của máy ảo
 ##### 1.1 Cấu hình card eth0 tự động active khi hệ thống boot-up####
-vi /etc/sysconfig/network-script/ifcfg-eth0 :
+vim /etc/sysconfig/network-script/ifcfg-eth0 :
 ```
 ONBOOT=yes
 ```
@@ -33,8 +33,8 @@ rpm -qa kernel | sed 's/^kernel-//'  | xargs -I {} dracut -f /boot/initramfs-{}.
 
 ##### 1.4 Cấu hình grub để  ‘phun’ log ra cho nova (Output của lệnh : nova get-console-output)
 vim /boot/grub/grub.conf
-#####Thay phần ```rhgb quiet```
-#####Bằng : ```console=tty0 console=ttyS0,115200n8```
+Thay phần ```rhgb quiet```
+Bằng : ```console=tty0 console=ttyS0,115200n8```
 
 ###### 1.5 Cấu hình cloud-init
 vim /etc/cloud/cloud.cfg

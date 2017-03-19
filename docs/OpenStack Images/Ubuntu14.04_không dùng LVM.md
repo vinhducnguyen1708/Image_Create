@@ -37,10 +37,14 @@ Sau đó chạy lệnh
 /etc/udev/rules.d/70-persistent-net.rules
 /lib/udev/rules.d/75-persistent-net-generator.rules
 ```
-
 Chú ý: không xóa 2 file này mà chỉ xóa nội dung 
 
-#####Tắt máy ảo 
+##### 1.6 Disable default config route
+```
+Comment dòng `link-local 169.254.0.0` trong `/etc/networks`
+```
+
+##### Tắt máy ảo 
 ```
 init 0
 ```
