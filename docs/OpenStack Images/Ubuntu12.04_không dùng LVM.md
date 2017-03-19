@@ -1,28 +1,22 @@
-##Bước tạo máy ảo bằng KVM mình sẽ bỏ qua và đi ngay vào phần xử lý image sau khi đã cài xong OS
-####<i>Chú ý: Khi tạo image không sử dụng LVM để có thể resize lại partition theo flavor</i>
-##1. Xử lý phần OS của máy ảo
-###Để máy ảo khi boot sẽ tự giãn phân vùng theo dung lượng mới, ta cài các gói sau:
+## Bước tạo máy ảo bằng KVM mình sẽ bỏ qua và đi ngay vào phần xử lý image sau khi đã cài xong OS
+#### <i>Chú ý: Khi tạo image không sử dụng LVM để có thể resize lại partition theo flavor</i>
+## 1. Xử lý phần OS của máy ảo
+### 1.1 Để máy ảo khi boot sẽ tự giãn phân vùng theo dung lượng mới, ta cài các gói sau:
 ```
 apt-get install cloud-utils cloud-initramfs-growroot cloud-init -y
 ```
-#####Để sau khi boot máy ảo, có thể nhận đủ các NIC gắn vào, tạo một script tại `/etc/boot/NIC.sh` với nội dung:
+##### 1.2 Để sau khi boot máy ảo, có thể nhận đủ các NIC gắn vào:
 ```
-for iface in $(ip -o link | cut -d: -f2 | tr -d ' ' | grep ^eth)
-do
-   egrep -q "^iface\s+$iface" /etc/network/interfaces
-   if [ $? -ne 0 ]
-   then
-       echo -e "auto $iface\niface $iface inet dhcp\n" >> /etc/network/interfaces
-       ifup $iface
-   fi
-done
+apt-get install netplug
+wget https://raw.githubusercontent.com/longsube/Netplug-config/master/netplug
 ```
-#####Sau đó sửa file `/etc/rc.local` để chạy script tự động khi máy ảo được boot
+
+##### 1.3 Đưa file netplug vào thư mục /etc/netplug
 ```
-bash /etc/boot/NIC.sh
-exit 0
+mv netplug /etc/netplug/netplug
+chmod +x /etc/netplug/netplug
 ```
-#####Chỉnh sửa file `/etc/default/grub` để bắn log ra trong quá trình tạo máy ảo
+##### 1.4 Chỉnh sửa file `/etc/default/grub` để bắn log ra trong quá trình tạo máy ảo
 ```
 GRUB_DEFAULT=0
 #GRUB_HIDDEN_TIMEOUT=0
@@ -35,29 +29,31 @@ GRUB_TERMINAL=console
 ```
 Sau đó chạy lệnh
 `update-grub`
-Để điều chỉnh metadata source cho máy ảo khi boot, chạy lệnh:
+
+##### 1.5 Để điều chỉnh metadata source cho máy ảo khi boot, chạy lệnh:
 `dpkg-reconfigure cloud-init`
 Chọn EC2 data source
 Ở trên máy ảo Ubuntu, account là "ubuntu"
-###Xóa toàn bộ các thông tin về địa chỉ MAC của card mạng ảo:
+
+#### 1.6 Xóa toàn bộ các thông tin về địa chỉ MAC của card mạng ảo:
 ```
 /etc/udev/rules.d/70-persistent-net.rules
 /lib/udev/rules.d/75-persistent-net-generator.rules
 ```
 Chú ý: không xóa 2 file này mà chỉ xóa nội dung 
 
-#####Tắt máy ảo 
+##### Tắt máy ảo 
 ```
 init 0
 ```
 
-##2.Xử lý Image 
-#####Xử dụng lệnh `virt-sysprep` để xóa toàn bộ các thông tin máy ảo:
+## 2.Xử lý Image 
+##### 2.1 Xử dụng lệnh `virt-sysprep` để xóa toàn bộ các thông tin máy ảo:
 ```
 virt-sysprep -a U.1204.img
 ```
-#####Dùng lệnh sau để tối ưu kích thước image:
+##### 2.2 Dùng lệnh sau để tối ưu kích thước image:
 ```
 virt-sparsify --compress U.1204.img U.1204.shrink.img
 ```
-#####Image <b>U.1204.shrink.img</b> đã có thể upload lên Glance
+##### Image <b>U.1204.shrink.img</b> đã có thể upload lên Glance
