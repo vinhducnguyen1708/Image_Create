@@ -13,8 +13,3 @@ openstack image create ubuntu-14.04.iso --disk-format iso --container-format bar
 
 ### 1.2. Truy cập vào dashboard của OpenStack và tạo máy ảo trên file ISO vừa đẩy
 
-![Đặt tên máy ảo](images/buildVM_fromISO_1.jpg)
-
-![Chọn file ISO](Image_Create/images/buildVM_fromISO_2.jpg)
-
-![Chọn cấu hình](Image_Create/images/buildVM_fromISO_3.jpg)
