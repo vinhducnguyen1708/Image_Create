@@ -1,6 +1,6 @@
 # Hướng dẫn thay đổi password root hoặc admin cho máy ảo đang hoạt động
 #### <i>Chú ý: </i>
- - Các hướng dẫn sử dụng công cụ qemu-guest-agent (> 2.3.0) cài đặt sẵn trong image để thay đổi password từ host KVM
+ - Các hướng dẫn sử dụng công cụ qemu-guest-agent (> 2.3.0) cài đặt trong image để thay đổi password từ host KVM
  - Sử dụng công cụ `virt-manager` để kết nối tới console máy ảo
 
 ## 1. Với OS Ubuntu 14.04
@@ -68,6 +68,26 @@ virsh qemu-agent-command instance-0000001d '{"execute":"guest-ping"}'
 ```
 
 Kết quả:
+```
+{"return":{}}
+```
+
+### 1.6. Sinh password mới `new`
+```
+echo -n "new" | base64
+```
+
+Kết quả:
+```
+YQ==
+```
+
+### 1.7. Chèn password mới vào máy ảo, lưu ý máy ảo phải đang bật
+```
+virsh  qemu-agent-command instance-0000001d '{ "execute": "guest-set-user-password","arguments": { "crypted": false,"username": "root","password": "YQ==" } }'
+```
+
+Kết quả;
 ```
 {"return":{}}
 ```
