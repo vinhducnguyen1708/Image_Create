@@ -9,18 +9,18 @@
 ```
 apt-get install cloud-utils cloud-initramfs-growroot cloud-init -y
 ```
-##### 1.2. Để sau khi boot máy ảo, có thể nhận đủ các NIC gắn vào:
+### 1.2. Để sau khi boot máy ảo, có thể nhận đủ các NIC gắn vào:
 ```
 apt-get install netplug
 wget https://raw.githubusercontent.com/longsube/Netplug-config/master/netplug
 ```
 
-##### 1.3. Đưa file netplug vào thư mục /etc/netplug
+### 1.3. Đưa file netplug vào thư mục /etc/netplug
 ```
 mv netplug /etc/netplug/netplug
 chmod +x /etc/netplug/netplug
 ```
-##### 1.4. Chỉnh sửa file `/etc/default/grub` để bắn log ra trong quá trình tạo máy ảo
+### 1.4. Chỉnh sửa file `/etc/default/grub` để bắn log ra trong quá trình tạo máy ảo
 ```
 GRUB_DEFAULT=0
 #GRUB_HIDDEN_TIMEOUT=0
@@ -34,12 +34,12 @@ GRUB_TERMINAL=console
 Sau đó chạy lệnh
 `update-grub`
 
-##### 1.5. Để điều chỉnh metadata source cho máy ảo khi boot, chạy lệnh:
+### 1.5. Để điều chỉnh metadata source cho máy ảo khi boot, chạy lệnh:
 `dpkg-reconfigure cloud-init`
 Chọn EC2 data source
 Ở trên máy ảo Ubuntu, account là "ubuntu"
 
-#### 1.6. Xóa toàn bộ các thông tin về địa chỉ MAC của card mạng ảo:
+### 1.6. Xóa toàn bộ các thông tin về địa chỉ MAC của card mạng ảo:
 ```
 /etc/udev/rules.d/70-persistent-net.rules
 /lib/udev/rules.d/75-persistent-net-generator.rules
@@ -52,11 +52,11 @@ init 0
 ```
 
 ## 2. Thực hiện trên Host KVM
-##### 2.1. Xử dụng lệnh `virt-sysprep` để xóa toàn bộ các thông tin máy ảo:
+### 2.1. Xử dụng lệnh `virt-sysprep` để xóa toàn bộ các thông tin máy ảo:
 ```
 virt-sysprep -a U.1204.img
 ```
-##### 2.2. Dùng lệnh sau để tối ưu kích thước image:
+### 2.2. Dùng lệnh sau để tối ưu kích thước image:
 ```
 virt-sparsify --compress U.1204.img U.1204.shrink.img
 ```
