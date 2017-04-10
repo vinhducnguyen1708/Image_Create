@@ -7,7 +7,7 @@
 qemu-img create -f qcow2 win2012R2.img 40G
 ```
 
-##### 1.2. Treen máy host KVM, lấy file virio driver, là các driver cho thiết bị ảo
+##### 1.2. Trên máy host KVM, lấy file virio driver, là các driver cho thiết bị ảo
 ```
 wget https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.117-1/virtio-win-0.1.117.iso
 chmod 0755 /var/www/webvirtmgr/images/virtio-win-0.1.117.iso
