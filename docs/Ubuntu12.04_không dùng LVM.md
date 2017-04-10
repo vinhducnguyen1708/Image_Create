@@ -1,4 +1,4 @@
-## Bước tạo máy ảo bằng KVM mình sẽ bỏ qua và đi ngay vào phần xử lý image sau khi đã cài xong OS
+## Xử lý image sau khi đã cài OS
 #### <i>Chú ý: </i>
  - Hướng dẫn này dành cho các image không sử dụng LVM
  - Sử dụng hướng dẫn này sau khi đã cài đặt xong OS trên image

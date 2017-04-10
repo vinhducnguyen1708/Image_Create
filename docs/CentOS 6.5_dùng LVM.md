@@ -44,7 +44,7 @@ vim /boot/grub/grub.conf
 Thay phần ```rhgb quiet```
 Bằng : ```console=tty0 console=ttyS0,115200n8
 
-##### 1.5. Cài parted, đây là công cụ để xử lý các phân vùng của ổ đĩa (xem thêm ở [đây] (http://manpages.ubuntu.com/manpages/wily/man8/parted.8.html) ) :
+##### 1.5. Cài parted, đây là công cụ để xử lý các phân vùng của ổ đĩa (xem thêm ở ![đây] (http://manpages.ubuntu.com/manpages/wily/man8/parted.8.html) ) :
 ```
 yum install parted -y
 ```
