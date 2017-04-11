@@ -98,3 +98,33 @@ openstack image create ubuntu-14.04.iso --disk-format iso --container-format bar
 sudo apt-get update
 sudo apt-get install openssh-client openssh-server -y
 ```
+
+### 2.2. Cài đặt các công cụ khác như hướng dẫn ở ![đây](/docs/Ubuntu14.04_không dùng LVM.md)
+
+### 2.3. Để có thể thay đổi password root máy ảo từ KVM Host, làm theo hướng dẫn ở ![đây](/docs/Huongdan_changeRootpass_VM.md)
+
+### 2.4 Tắt máy ảo
+```
+sudo init 0
+```
+
+## 3. Đóng gói image
+### 3.1. Xóa máy ảo và gỡ volume khỏi máy ảo, sau đó upload volume `u14-iso-vol` lên Glance
+
+![upload volume](/images/buildVM_fromISO_24.jpg)
+
+![upload volume](/images/buildVM_fromISO_25.jpg)
+
+### 3.2. Kiểm tra image đã upload thành công hay chưa
+
+![image](/images/buildVM_fromISO_26.jpg)
+
+### 3.3. Chỉnh sửa metadata của image upload
+![view metadata](/images/buildVM_fromISO_27.jpg)
+
+Thêm 2 metadata là 'hw_qemu_guest_agent' và 'os_admin_user', set giá trị là True, sau đó save lại
+![update metadata](/images/buildVM_fromISO_28.jpg)
+
+### 3.4. Image đã sẵn sàng để launch máy ảo
+
+Done
