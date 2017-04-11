@@ -1,4 +1,10 @@
 # Hướng dẫn tạo máy ảo từ file ISO
+### Mục tiêu của hướng dẫn:
+```
+ - Đáp ứng nhu cầu khách hàng: tạo máy ảo trực tiếp từ file ISO khi kho image của dịch vụ không có image khách hàng cần.
+ - Phục vụ quản trị hệ thống: tạo mới image cho dịch vụ.
+```
+
 #### <i>Chú ý: </i>
  - Sử dụng ISO Ubuntu 14.04
  - Sử dụng công cụ `virt-manager` để kết nối tới console máy ảo
