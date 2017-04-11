@@ -10,7 +10,7 @@
  - Hướng dẫn thực hiện trên phiên bản OpenStack Mitaka.
 
 ## 1. Cài đặt OS cho Image
-### 1.1. Trên node Cotroller, tải file ISO và lên Glance
+### 1.1. Trên node Controller, tải file ISO và upload lên Glance
 ```
 wget http://releases.ubuntu.com/14.04/ubuntu-14.04.5-server-amd64.iso
 openstack image create ubuntu-14.04.5.iso --disk-format iso --container-format bare --public < ubuntu-14.04.5-server-amd64.iso
@@ -88,7 +88,7 @@ openstack image create ubuntu-14.04.5.iso --disk-format iso --container-format b
 
 ![restart VM](/images/buildVM_fromISO_21.jpg)
 
-### 1.11. Sau khi khởi động lại vào màn hình cài đặt, nhấn `ESC` để lựa chọn `Boot from a hard disk`
+### 1.11. Sau khi khởi động lại vào màn hình cài đặt, nhấn `ESC` để lựa chọn `Boot from first hard disk`
 
 ![boot hard disk](/images/buildVM_fromISO_22.jpg)
 
@@ -130,6 +130,6 @@ sudo init 0
 Thêm 2 metadata là 'hw_qemu_guest_agent' và 'os_admin_user', set giá trị là True, sau đó save lại
 ![update metadata](/images/buildVM_fromISO_28.jpg)
 
-### 3.4. Image đã sẵn sàng để launch máy ảo
+### 3.4. Xóa volume `u14-iso-vol`, Image đã sẵn sàng để launch máy ảo.
 
-Done
+##Done
