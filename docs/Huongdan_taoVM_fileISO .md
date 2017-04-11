@@ -99,7 +99,7 @@ sudo apt-get update
 sudo apt-get install openssh-client openssh-server -y
 ```
 
-### 2.2. Cài đặt các công cụ khác như hướng dẫn ở [đây](/docs/Ubuntu14.04_khong dung LVM.md)
+### 2.2. Cài đặt các công cụ khác như hướng dẫn ở [đây](/docs/Ubuntu14.04_khong_dung LVM.md)
 
 ### 2.3. Để có thể thay đổi password root máy ảo từ KVM Host, làm theo hướng dẫn ở [đây](/docs/Huongdan_changeRootpass_VM.md)
 
