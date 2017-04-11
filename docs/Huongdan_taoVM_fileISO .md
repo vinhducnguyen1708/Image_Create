@@ -15,9 +15,9 @@ openstack image create ubuntu-14.04.iso --disk-format iso --container-format bar
 
 ![Đặt tên máy ảo](/images/buildVM_fromISO_1.jpg)
 
-![Chọn file ISO](Image_Create//images/buildVM_fromISO_2.jpg)
+![Chọn file ISO](/images/buildVM_fromISO_2.jpg)
 
-![Chọn cấu hình](Image_Create//images/buildVM_fromISO_3.jpg)
+![Chọn cấu hình](/images/buildVM_fromISO_3.jpg)
 
 ### 1.3. Đợi đến khi máy ảo chuyển trạng thái sang active, tạo một volume trống (20GB) và gắn vào máy ảo
 
@@ -53,14 +53,48 @@ openstack image create ubuntu-14.04.iso --disk-format iso --container-format bar
 
 ![format partition](/images/buildVM_fromISO_13.jpg)
 
-### 1.10. Chọn `Finish partitioning and write changes to disk`, đồng ý không sử dụng swap disk
+### 1.10. Chọn `Finish partitioning and write changes to disk`
 
 ![finish partition](/images/buildVM_fromISO_14.jpg)
+
+#### Đồng ý không sử dụng swap disk
 
 ![no swap](/images/buildVM_fromISO_15.jpg)
 
 ![write change](/images/buildVM_fromISO_16.jpg)
 
-### 1.11. Không chọn `HTTP proxy` và `Continue`
+#### Không chọn `HTTP proxy` và `Continue`
 
 ![no proxy](/images/buildVM_fromISO_17.jpg)
+
+#### Chọn `No automatic update`
+
+![no auto update](/images/buildVM_fromISO_18.jpg)
+
+#### Không cài đặt software
+
+![no install software](/images/buildVM_fromISO_19.jpg)
+
+#### Cài đặt GRUB bootloader
+
+![install GRUB](/images/buildVM_fromISO_20.jpg)
+
+#### Khởi động lại VM
+
+![restart VM](/images/buildVM_fromISO_21.jpg)
+
+### 1.11. Sau khi khởi động lại vào màn hình cài đặt, nhấn `ESC` để lựa chọn `Boot from a hard disk`
+
+![boot hard disk](/images/buildVM_fromISO_22.jpg)
+
+### 1.12. Sử dụng tài khoản khai báo ban đầu để login vào VM
+
+![login VM](/images/buildVM_fromISO_23.jpg)
+
+
+## 2. Cài đặt các công cụ để xử lý VM
+### 2.1. Cài đặt openssh-client và openssh-server
+```
+sudo apt-get update
+sudo apt-get install openssh-client openssh-server -y
+```
