@@ -6,9 +6,8 @@
 ```
 
 #### <i>Chú ý: </i>
- - Sử dụng ISO Ubuntu 14.04
- - Sử dụng công cụ `virt-manager` để kết nối tới console máy ảo
- - Phiên bản OpenStack Mitaka
+ - Sử dụng ISO Ubuntu 14.04.5, các image khác có thể thực hiện theo các bước tương tự.
+ - Hướng dẫn thực hiện trên phiên bản OpenStack Mitaka.
 
 ## 1. Cài đặt OS cho Image
 ### 1.1. Trên node Cotroller, tải file ISO và lên Glance
