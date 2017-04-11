@@ -132,4 +132,4 @@ Thêm 2 metadata là 'hw_qemu_guest_agent' và 'os_admin_user', set giá trị l
 
 ### 3.4. Xóa volume `u14-iso-vol`, Image đã sẵn sàng để launch máy ảo.
 
-##Done
+## Done
