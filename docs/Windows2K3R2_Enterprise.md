@@ -3,18 +3,18 @@
  - Hướng dẫn bao gồm 2 phần chính: thực hiện trên máy ảo cài OS và thực hiện trên KVM Host
 
 ## 1. Cài OS cho máy ảo
-### 1.1. Trên máy host KVM, tạo file image cho máy ảo (với windows nên lấy dung lượng 40GB trở lên), đặt tại thư mục /var/lib/libvirt/images/win2k3_enterprise/
+### 1.1. Trên máy host KVM, tạo file image cho máy ảo (với windows nên lấy dung lượng 40GB trở lên), đặt tại thư mục /var/lib/libvirt/images/
 ```
-qemu-img create -f qcow2 /var/lib/libvirt/images/win2k3_enterprise/win2k3R2x64_enterprise.img 40G
+qemu-img create -f qcow2 /var/lib/libvirt/images/win2k3R2x64_enterprise.img 40G
 ```
 
 ### 1.2. Trên máy host KVM, lấy file ISO Windows2k3 Enterprise và virio driver phiên bản dành cho Windows 2k3 driver cho thiết bị ảo, đặt tại thư mục /var/www/ftp/ISO/
 ```
 wget -O /var/www/ftp/ISO/virtio-win-1.1.16.iso https://drive.google.com/open?id=0B-9dXNs6dxdoMjdlNDZZWXVEeTA
 chmod +x /var/www/ftp/ISO/windows2003_R2_enterprise.iso
-wget -O /var/www/ftp/ISO/virtio-win-1.1.16.iso /tools/virtio-win-1.1.16.iso
+wget -O /var/www/ftp/ISO/virtio-win-1.1.16.iso https://drive.google.com/open?id=0B-9dXNs6dxdoaUkxaENTU1lkOEE
 chmod +x /var/www/ftp/ISO/virtio-win-1.1.16.iso
-wget -O /var/www/ftp/ISO/virtio-win-1.1.16.vfd /tools/virtio-win-1.1.16.vfd
+wget -O /var/www/ftp/ISO/virtio-win-1.1.16.vfd https://drive.google.com/open?id=0B-9dXNs6dxdoRjRqTm1OYktGSUE
 chmod +x /var/www/ftp/ISO/virtio-win-1.1.16.vfd
 ```
 
