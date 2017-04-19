@@ -1,16 +1,17 @@
 #### <i>Chú ý: </i>
  - Sử dụng công cụ `virt-manager` để kết nối tới console máy ảo
+ - Hướng dẫn bao gồm 2 phần chính: thực hiện trên máy ảo cài OS và thực hiện trên KVM Host
 
 ## 1. Cài OS cho máy ảo
-### 1.1. Trên máy host KVM, tạo file qcow2 cho máy ảo (với windows nên lấy dung lượng 40GB trở lên)
+### 1.1. Trên máy host KVM, tạo file qcow2 cho máy ảo (với windows nên lấy dung lượng 40GB trở lên), đặt tại thư mục /var/lib/libvirt/images/
 ```
-qemu-img create -f qcow2 win2012R2.img 40G
+qemu-img create -f /var/lib/libvirt/images/qcow2 win2012R2.img 40G
 ```
 
-### 1.2. Trên máy host KVM, lấy file virio driver, là các driver cho thiết bị ảo
+### 1.2. Trên máy host KVM, lấy file virio driver (bản stable mới nhất), đây là các driver cho thiết bị ảo, đặt tại thư mục /var/lib/libvirt/iso/
 ```
-wget https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.117-1/virtio-win-0.1.117.iso
-chmod 0755 /var/www/webvirtmgr/images/virtio-win-0.1.117.iso
+wget -O /var/lib/libvirt/iso/virtio-win.iso https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso
+chmod 0755 /var/lib/libvirt/images/virtio-win.iso
 ```
 
 
@@ -18,11 +19,11 @@ chmod 0755 /var/www/webvirtmgr/images/virtio-win-0.1.117.iso
 ```
 virt-install \
 -n Win2012R2 -r 4096 --vcpus 4 --os-type=windows --os-variant=win2k8 \
---disk path=/var/www/webvirtmgr/images/win2012R2.img,format=qcow2,bus=virtio,cache=none \
---disk path=/var/www/webvirtmgr/images/virtio-win-0.1.117.iso,device=cdrom \
+--disk path=/var/lib/libvirt/images/win2012R2.img,format=qcow2,bus=virtio,cache=none \
+--disk path=/var/lib/libvirt/images/virtio-win.iso,device=cdrom \
 -w network=default,model=virtio \
 --vnc --noautoconsole \
--c /var/www/webvirtmgr/images/Win2k12R2.ISO
+-c /var/lib/libvirt/images/Win2k12R2.ISO
 ```
 
 ### 1.4. Trên máy host KVM, bật giao diện virt-manager để cài đặt OS cho VM
@@ -36,7 +37,7 @@ sudo virt-manager
 ![Disk Driver](http://image.prntscr.com/image/5bd0f8014b9c400fa434153dc165628e.png)
 
 ### 1.6. Tiến hành cài đặt OS
-![Cài OS] (http://image.prntscr.com/image/188605ed4e2b4e0581a8189db945071a.png)
+![Cài OS](http://image.prntscr.com/image/188605ed4e2b4e0581a8189db945071a.png)
 
 ## 2. Xử lý image sau khi đã cài xong OS
 ### 2.1. Cài đặt Baloon network driver để VM nhận card mạng
@@ -83,11 +84,34 @@ Enable Sysprep và shutdown máy
 ![Cài Cloud init](http://image.prntscr.com/image/3930d59815f44c8d984a262de6cb5455.png)
 
 ## 3.Thực hiện trên Host KVM
-### 3.1. Dùng lệnh sau để tối ưu kích thước image:
+### 3.1. Cài đặt bộ libguestfs-tools để xử lý image (nên cài đặt trên Ubuntu OS để có bản libguestfs mới nhất)
+```
+apt-get install libguestfs-tools -y
+```
+
+### 3.2. Dùng lệnh sau để tối ưu kích thước image:
 ```
 virt-sparsify --compress win2012R2.img win2012R2.shrink.img
 ```
-### 3.2. Image <b>win2012R2.shrink.img</b> đã có thể upload lên Glance
 
-Tham khảo: http://www.stratoscale.com/blog/storage/deploying-ceph-challenges-solutions/?utm_source=twitter&utm_medium=social&utm_campaign=blog_deploying-ceph-challenges-solutions
+### 3.3. Upload image lên glance
+```
+openstack image create Win2k12--disk-format qcow2 --container-format bare --public < win2012R2.shrink.img
+```
+
+### 3.4. Kiểm tra việc upload image đã thành công hay chưa
+
+![upload image](/images/win2k12_1.jpg)
+
+### 3.5. Chỉnh sửa metadata của image upload
+![view metadata](/images/win2k12_2.jpg)
+
+Thêm 2 metadata là 'hw_qemu_guest_agent' và 'os_admin_user', set giá trị là True, sau đó save lại
+![update metadata](/images/win2k12_3.jpg)
+
+### 3.6. Image đã sẵn sàng để launch máy ảo.
+
+## Done
  
+Tham khảo: 
+[1] - http://www.stratoscale.com/blog/storage/deploying-ceph-challenges-solutions/?utm_source=twitter&utm_medium=social&utm_campaign=blog_deploying-ceph-challenges-solutions

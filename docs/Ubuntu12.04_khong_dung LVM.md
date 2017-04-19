@@ -3,6 +3,7 @@
  - Hướng dẫn này dành cho các image không sử dụng LVM
  - Sử dụng hướng dẫn này sau khi đã cài đặt xong OS trên image
  - Sử dụng công cụ `virt-manager` để kết nối tới console máy ảo
+ - Hướng dẫn bao gồm 2 phần chính: thực hiện trên máy ảo cài OS và thực hiện trên KVM Host
 
 ## 1. Thực hiện trên máy ảo
 ### 1.1. Để máy ảo khi boot sẽ tự giãn phân vùng theo dung lượng mới, ta cài các gói sau:
@@ -11,7 +12,7 @@ apt-get install cloud-utils cloud-initramfs-growroot cloud-init -y
 ```
 ### 1.2. Để sau khi boot máy ảo, có thể nhận đủ các NIC gắn vào:
 ```
-apt-get install netplug
+apt-get install netplug -y
 wget https://raw.githubusercontent.com/longsube/Netplug-config/master/netplug
 ```
 
@@ -61,3 +62,5 @@ virt-sysprep -a U.1204.img
 virt-sparsify --compress U.1204.img U.1204.shrink.img
 ```
 ##### Image <b>U.1204.shrink.img</b> đã có thể upload lên Glance
+
+## Done

@@ -3,6 +3,8 @@
  - Hướng dẫn này dành cho các image không sử dụng LVM
  - Sử dụng hướng dẫn này sau khi đã cài đặt xong OS trên image
  - Sử dụng công cụ `virt-manager` để kết nối tới console máy ảo
+ - Phiên bản OpenStack sử dụng là Mitaka
+ - Hướng dẫn bao gồm 2 phần chính: thực hiện trên máy ảo cài OS và thực hiện trên KVM Host
 
 ## 1. Thực hiện trên máy ảo
 ### 1.1. Cấu hình card eth0 tự động active khi hệ thống boot-up
@@ -40,12 +42,22 @@ vim /boot/grub/grub.conf
 Thay phần ```rhgb quiet```
 Bằng : ```console=tty0 console=ttyS0,115200n8```
 
-### 1.5. Cấu hình cloud-init
+### 1.5. Cấu hình cloud-init, sửa file `/etc/cloud/cloud.cfg` như sau
 vim /etc/cloud/cloud.cfg
 ```
 disable_root: 0
 ssh_pwauth:   1
+...
+system_info:
+  default_user:
+    name: root
+  distro: rhel
+  paths:
+    cloud_dir: /var/lib/cloud
+    templates_dir: /etc/cloud/templates
+  ssh_svcname: sshd
 ```
+
 ### 1.6. Để sau khi boot máy ảo, có thể nhận đủ các NIC gắn vào:
 ```
 yum install netplug -y
@@ -87,5 +99,21 @@ virt-sysprep -a CentOS65.img
 sudo virt-sparsify --compress CentOS65.img CentOS65_shrink.img
 ```
 
-### 2.4. Upload lên glance
-Qúa trình tạo template đã xong, bạn upload file centos6.5.cloud.qcow2 lên Openstack là có thể sử dụng được.
+### 2.4. Upload image lên glance
+```
+openstack image create CentOS_6.5 --disk-format qcow2 --container-format bare --public < CentOS65_shrink.img
+```
+
+### 2.5. Kiểm tra việc upload image đã thành công hay chưa
+
+![upload image](/images/cent65_1.jpg)
+
+### 2.6. Chỉnh sửa metadata của image upload
+![view metadata](/images/cent65_2.jpg)
+
+Thêm 2 metadata là 'hw_qemu_guest_agent' và 'os_admin_user', set giá trị là True, sau đó save lại
+![update metadata](/images/cent65_3.jpg)
+
+### 2.7. Image đã sẵn sàng để launch máy ảo.
+
+## Done
