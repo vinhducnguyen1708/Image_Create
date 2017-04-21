@@ -76,7 +76,7 @@ service apparmor reload
 ```
 
 ### 1.15. Bật máy ảo để cài đặt OS
-![Create VM 10](/images/win2k12_standard/win2k12_10.jpg)
+![Create VM 10](/images/win2k12_standard/win2k12_10.png)
 
 ### 1.16. Lựa chọn phiên bản cài đặt (Windows Server 2012 R2 Standard Evaluation GUI)
 ![Create VM 11](/images/win2k12_standard/win2k12_11.jpg)
