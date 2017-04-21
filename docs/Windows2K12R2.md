@@ -62,6 +62,7 @@ với Win2012 là tên máy ảo
 
 ### 1.14. Dùng `vim` để sửa file `/etc/apparmor.d/abstractions/libvirt-qemu`
 `vim /etc/apparmor.d/abstractions/libvirt-qemu`
+
 Bổ sung thêm cấu hình sau vào dòng cuối cùng
 ```
 /var/lib/libvirt/qemu/*.agent rw,
@@ -121,10 +122,11 @@ Chọn Driver storage cho Windows 2k12R2
 ### 2.2. Cài đặt Baloon driver cho Memory
 Copy `/virtio-win-0.1.1/Baloon/2k12R2/amd64` từ CD Drive vào `C:\`
 ![Create VM 29](/images/win2k12_standard/win2k12_30.jpg)
+
 Chạy CMD, trỏ về thư mục amd64 vừa copy và chạy lệnh:
 ```
-cd C:\amd64
-\blnsvr.exe -i
+PS C:\Users\Administrator> cd C:\amd64
+PS C:\amd6>. \blnsvr.exe -i
 ```
 ![Create VM 30](/images/win2k12_standard/win2k12_31.jpg)
 Kiểm tra trong services.msc
@@ -145,9 +147,9 @@ Cài đặt qemu-guest-agent cho Windows Server 2k12, vào CD ROM virio và cài
 ![Create VM 36](/images/win2k12_standard/win2k12_37.jpg)
 
 Kiểm tra lại việc cài đặt qemu-guest-agent
+`PS C:\Users\Administrator> Get-Service QEMU-GA`
+
 ![Create VM 37](/images/win2k12_standard/win2k12_38.jpg)
-
-
 
 
 ### 2.3. Cài đặt cloud-init bản mới nhất
@@ -183,6 +185,7 @@ ntp_use_dhcp_config=true
 local_scripts_path=C:\Program Files\Cloudbase Solutions\Cloudbase-Init\LocalScripts\
 ```
 Enable Sysprep và shutdown máy
+
 ![Create VM 43](/images/win2k12_standard/win2k12_44.jpg)
 ![Create VM 44](/images/win2k12_standard/win2k12_45.jpg)
 
