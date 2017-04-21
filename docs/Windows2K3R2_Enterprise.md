@@ -1,11 +1,11 @@
 #### <i>Chú ý: </i>
  - Sử dụng công cụ `virt-manager` để kết nối tới console máy ảo
- - Hướng dẫn bao gồm 2 phần chính: thực hiện trên máy ảo cài OS và thực hiện trên KVM Host
+ - Hướng dẫn bao gồm 3 phần chính: cài đặt OS máy ảo, thực hiện trên máy ảo cài OS, thực hiện trên KVM Host
 
 ## 1. Cài OS cho máy ảo
-### 1.1. Trên máy host KVM, tạo file image cho máy ảo (với windows nên lấy dung lượng 40GB trở lên), đặt tại thư mục /var/lib/libvirt/images/
+### 1.1. Trên máy host KVM, tạo file image cho máy ảo (với windows nên lấy dung lượng 40GB trở lên), đặt tại thư mục /var/www/ftp/images/
 ```
-qemu-img create -f qcow2 /var/lib/libvirt/images/win2k3R2x64_enterprise.img 40G
+qemu-img create -f qcow2 /var/www/ftp/images/win2k3R2x64_enterprise.img 40G
 ```
 
 ### 1.2. Trên máy host KVM, lấy file ISO Windows2k3 Enterprise và virio driver phiên bản dành cho Windows 2k3 driver cho thiết bị ảo, đặt tại thư mục /var/www/ftp/ISO/
@@ -48,7 +48,7 @@ chmod +x /var/www/ftp/ISO/virtio-win-1.1.16.vfd
 ![Windows Install 3](/images/win2k3_enterprise/win2k3_9.jpg)
 
 ### 1.11. Chọn phân vùng trống và "Enter"
-*Chú ý: cần phải có file virtio-win-1.1.16.vfd thì máy ảo mới nhận được disk*
+#### *Chú ý: cần phải có file virtio-win-1.1.16.vfd thì máy ảo mới nhận được disk*
 ![Windows Install 4](/images/win2k3_enterprise/win2k3_10.jpg)
 
 ### 1.12. Format phân vùng vừa chọn thành NTFS
@@ -101,7 +101,7 @@ Chờ Driver được cài đặt và Finish
 ![Windows Setup 7](/images/win2k3_enterprise/win2k3_27.jpg)
 ![Windows Setup 8](/images/win2k3_enterprise/win2k3_28.jpg)
 
-### 2.3. Xác thực lại việc cài đặt Driver cho NIC
+### 2.3. Kiểm tra lại việc cài đặt Driver cho NIC
 ![Windows Setup 9](/images/win2k3_enterprise/win2k3_29.jpg)
 ![Windows Setup 10](/images/win2k3_enterprise/win2k3_30.jpg)
 
@@ -116,12 +116,12 @@ apt-get install libguestfs-tools -y
 
 ### 3.2. Dùng lệnh sau để tối ưu kích thước image:
 ```
-virt-sparsify --compress /var/lib/libvirt/images/win2k3_enterprise/win2k3R2x64_enterprise.img /var/lib/libvirt/images/win2k3_enterprise/win2k3R2x64_enterprise_shrink.img
+virt-sparsify --compress /var/lib/libvirt/images/win2k3R2x64_enterprise.img /var/lib/libvirt/images/win2k3R2x64_enterprise_shrink.img
 ```
 
 ### 3.3. Upload image lên glance
 ```
-openstack image create Win2k3_enterprise--disk-format qcow2 --container-format bare --public < /var/lib/libvirt/images/win2k3_enterprise/win2k3R2x64_enterprise_shrink.img
+openstack image create Win2k3_enterprise--disk-format qcow2 --container-format bare --public < /var/lib/libvirt/images/win2k3R2x64_enterprise_shrink.img
 ```
 
 ### 3.4. Image đã sẵn sàng để launch máy ảo.

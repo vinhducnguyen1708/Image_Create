@@ -50,8 +50,9 @@ Chú ý: không xóa 2 file này mà chỉ xóa nội dung
 Comment dòng `link-local 169.254.0.0` trong `/etc/networks`
 
 ### 1.7. Cài đặt `qemu-guest-agent`
+#### *Chú ý: qemu-guest-agent là một daemon chạy trong máy ảo, giúp quản lý và hỗ trợ máy ảo khi cần (có thể cân nhắc việc cài thành phần này lên máy ảo) *
 ```
-apt-get install qemu-guest-agent
+apt-get install qemu-guest-agent -y
 ```
 #### Kiểm tra phiên bản `qemu-ga` bằng lệnh:
 ```
@@ -121,5 +122,59 @@ Thêm 2 metadata là 'hw_qemu_guest_agent' và 'os_admin_user', set giá trị l
 ![update metadata](/images/u1404_3.jpg)
 
 ### 2.7. Image đã sẵn sàng để launch máy ảo.
+
+## 3. Thử nghiệm việc đổi password máy ảo (sau đã đã tạo máy ảo)
+### 3.1. Kiểm tra trên máy Host KVM để tìm file socket kết nối tới máy ảo
+```
+bash -c  "ls /var/lib/libvirt/qemu/*.sock"
+```
+
+Kết quả:
+```
+/var/lib/libvirt/qemu/org.qemu.guest_agent.0.instance-0000001d.sock
+
+instance-0000001d: tên của máy ảo trên KVM
+```
+
+```
+file /var/lib/libvirt/qemu/org.qemu.guest_agent.0.instance-0000001d.sock
+```
+
+Kết quả:
+```
+/var/lib/libvirt/qemu/org.qemu.guest_agent.0.instance-0000001d.sock: socket
+```
+
+### 3.2. Kiểm tra kết nối tới máy ảo
+```
+virsh qemu-agent-command instance-0000001d '{"execute":"guest-ping"}'
+```
+
+Kết quả:
+```
+{"return":{}}
+```
+
+### 3.3. Sinh password mới `new`
+```
+echo -n "new" | base64
+```
+
+Kết quả:
+```
+YQ==
+```
+
+### 3.4. Chèn password mới vào máy ảo, lưu ý máy ảo phải đang bật
+```
+virsh  qemu-agent-command instance-0000001d '{ "execute": "guest-set-user-password","arguments": { "crypted": false,"username": "root","password": "YQ==" } }'
+```
+
+Kết quả;
+```
+{"return":{}}
+```
+
+Thử đăng nhập vào máy ảo với password `new`
 
 ## Done
