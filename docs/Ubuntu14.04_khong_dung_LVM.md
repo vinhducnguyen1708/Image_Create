@@ -50,7 +50,8 @@ Chú ý: không xóa 2 file này mà chỉ xóa nội dung
 Comment dòng `link-local 169.254.0.0` trong `/etc/networks`
 
 ### 1.7. Cài đặt `qemu-guest-agent`
-#### *Chú ý: qemu-guest-agent là một daemon chạy trong máy ảo, giúp quản lý và hỗ trợ máy ảo khi cần (có thể cân nhắc việc cài thành phần này lên máy ảo) *
+#### *Chú ý: qemu-guest-agent là một daemon chạy trong máy ảo, giúp quản lý và hỗ trợ máy ảo khi cần (có thể cân nhắc việc cài thành phần này lên máy ảo)*
+#### *Để có thể thay đổi password máy ảo thì phiên bản qemu-guest-agent phải >= 2.5.0*
 ```
 apt-get install qemu-guest-agent -y
 ```
@@ -178,3 +179,9 @@ Kết quả;
 Thử đăng nhập vào máy ảo với password `new`
 
 ## Done
+
+Tham khảo: 
+
+[1] - https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Virtualization_Deployment_and_Administration_Guide/chap-QEMU_Guest_Agent.html
+
+[2] - https://www.sebastien-han.fr/blog/2015/02/09/openstack-perform-consistent-snapshots-with-qemu-guest-agent/
