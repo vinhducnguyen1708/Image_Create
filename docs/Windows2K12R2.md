@@ -15,6 +15,7 @@ chmod +x /var/www/ftp/iso/Win2k12x64_Standard.iso
 wget -O /var/www/ftp/iso/virtio-win.iso https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso
 chmod 0755 /var/www/ftp/iso/virtio-win.iso
 ```
+#### *Chú ý: để có thể sử dụng qemu-guest-agent để thay đổi password máy ảo thì phiên bản virio phải >= 0.1.126*
 
 ### 1.3. Trên máy host KVM, bật giao diện virt-manager và khởi tạo, khai báo tên máy ảo
 ![Create VM 1](/images/win2k12_standard/win2k12_1.jpg)
@@ -53,7 +54,6 @@ với Win2012 là tên máy ảo
 ```
 ...
  <channel type='unix'>
-      <source mode='bind' path='/var/lib/libvirt/qemu/Win2012.agent'/>
       <target type='virtio' name='org.qemu.guest_agent.0'/>
       <address type='virtio-serial' controller='0' bus='0' port='1'/>
  </channel>
@@ -65,9 +65,9 @@ với Win2012 là tên máy ảo
 
 Bổ sung thêm cấu hình sau vào dòng cuối cùng
 ```
-/var/lib/libvirt/qemu/*.agent rw,
+ /var/lib/libvirt/qemu/channel/target/*.qemu.guest_agent.0 rw,
 ```
-#### *Mục đích là phân quyền cho phép libvirt-qemu được đọc ghi các file có đuôi `.agent` trong thư mục `/var/lib/libvirt/qemu/`*
+#### *Mục đích là phân quyền cho phép libvirt-qemu được đọc ghi các file có hậu tố `.qemu.guest_agent.0` trong thư mục `/var/lib/libvirt/qemu/channel/target`*
 
 Khởi động lại `libvirt` và `apparmor`
 ```
@@ -147,12 +147,20 @@ Cài đặt qemu-guest-agent cho Windows Server 2k12, vào CD ROM virio và cài
 ![Create VM 36](/images/win2k12_standard/win2k12_37.jpg)
 
 Kiểm tra lại việc cài đặt qemu-guest-agent
+
 `PS C:\Users\Administrator> Get-Service QEMU-GA`
 
 ![Create VM 37](/images/win2k12_standard/win2k12_38.jpg)
 
+Kiểm tra lại version của qemu-guest-agent (phải đảm bảo version >= 7.3.2)
+![qemu-ga version](/images/win2k12_standard/win2k12_49.jpg)
 
-### 2.3. Cài đặt cloud-init bản mới nhất
+### 2.3. Disable Firewall và enable remote desktop
+![disable FW](/images/win2k12_standard/win2k12_51.jpg)
+![enable RDP](/images/win2k12_standard/win2k12_50.jpg)
+
+
+### 2.4. Cài đặt cloud-init bản mới nhất
 Download cloud base init cho Windows bản mới nhất tại [đây](https://cloudbase.it/cloudbase-init/)
 ![Create VM 38](/images/win2k12_standard/win2k12_39.jpg)
 
@@ -217,7 +225,68 @@ Thêm 2 metadata là 'hw_qemu_guest_agent' và 'os_admin_user', set giá trị l
 
 ### 3.6. Image đã sẵn sàng để launch máy ảo.
 
+## 4. Thử nghiệm việc đổi password máy ảo (sau đã đã tạo máy ảo)
+### 4.1. Kiểm tra trên máy Host KVM để tìm file socket kết nối tới máy ảo
+```
+bash -c  "ls /var/lib/libvirt/qemu/*.sock"
+```
+
+Kết quả:
+```
+/var/lib/libvirt/qemu/org.qemu.guest_agent.0.instance-0000001d.sock
+
+instance-0000001d: tên của máy ảo trên KVM
+```
+
+```
+file /var/lib/libvirt/qemu/org.qemu.guest_agent.0.instance-0000001d.sock
+```
+
+Kết quả:
+```
+/var/lib/libvirt/qemu/org.qemu.guest_agent.0.instance-0000001d.sock: socket
+```
+
+### 4.2. Kiểm tra kết nối tới máy ảo. Ở trên node compute chứa máy ảo (compute6), chạy lệnh:
+```
+root@compute6:~# virsh qemu-agent-command instance-0000181b '{"execute":"guest-ping"}'
+```
+
+Kết quả:
+```
+{"return":{}}
+```
+
+### 4.3. Sinh password mới `123456a@` (password phải đáp ứng yêu cầu phức tạp của Windows)
+```
+echo -n "123456a@" | base64
+```
+
+Kết quả:
+```
+MTIzNDU2YUA=
+```
+
+### 4.4. Ở trên node compute chứa máy ảo (compute6), chèn password mới vào máy ảo, lưu ý máy ảo phải đang bật
+```
+root@compute6:~# virsh  qemu-agent-command instance-0000181b '{ "execute": "guest-set-user-password","arguments": { "crypted": false,"username": "administrator","password": "MTIzNDU2YUA=" } }'
+```
+
+Kết quả;
+```
+{"return":{}}
+```
+
+Thử đăng nhập vào máy ảo với password `123456a@`
+
 ## Done
- 
+
 Tham khảo: 
+
 [1] - http://www.stratoscale.com/blog/storage/deploying-ceph-challenges-solutions/?utm_source=twitter&utm_medium=social&utm_campaign=blog_deploying-ceph-challenges-solutions
+
+[2] - https://pve.proxmox.com/wiki/Qemu-guest-agent
+
+[3] - https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Virtualization_Administration_Guide/sect-QEMU_Guest_Agent-Running_the_QEMU_guest_agent_on_a_Windows_guest.html
+
+[4] - https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Virtualization_Deployment_and_Administration_Guide/chap-QEMU_Guest_Agent.html
