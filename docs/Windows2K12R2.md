@@ -239,7 +239,7 @@ Kết quả:
 | OS-EXT-AZ:availability_zone          | nova                                                                             |
 | OS-EXT-SRV-ATTR:host                 | compute6		                                                                  |
 | OS-EXT-SRV-ATTR:hostname             | win2k12-qemu-ga                                                                  |
-| OS-EXT-SRV-ATTR:hypervisor_hostname  | compute6.hcm.vnpt                                                                |
+| OS-EXT-SRV-ATTR:hypervisor_hostname  | compute6                                                                         |
 | OS-EXT-SRV-ATTR:instance_name        | instance-00001827                                             
 ```
 
