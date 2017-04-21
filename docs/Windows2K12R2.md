@@ -50,7 +50,7 @@ chmod 0755 /var/www/ftp/iso/virtio-win.iso
 ### 1.13. Chỉnh sửa file .xml của máy ảo, bổ sung thêm channel (để máy host giao tiếp với máy ảo sử dụng qemu-guest-agent), sau đó save lại
 `virsh edit Win2012`
 
-với Win2012 là tên máy ảo
+với `Win2012` là tên máy ảo
 ```
 ...
  <channel type='unix'>
@@ -226,7 +226,7 @@ Thêm 2 metadata là 'hw_qemu_guest_agent' và 'os_type', với giá trị tươ
 ### 3.6. Image đã sẵn sàng để launch máy ảo.
 
 ## 4. Thử nghiệm việc đổi password máy ảo (sau đã đã tạo máy ảo)
-### Cách 1: sử dụng nova API
+### Cách 1: sử dụng nova API (lưu ý máy ảo phải đang bật)
 Trên node Controller, thực hiện lệnh và nhập password cần đổi
 
 ```
@@ -234,7 +234,7 @@ root@controller1:# nova set-password win2k12_qemu_ga
 New password: 
 Again: 
 ```
-với win2k12_qemu_ga là tên máy ảo
+với `win2k12_qemu_ga` là tên máy ảo
 
 
 ### Cách 2: sử dụng trực tiếp libvirt
@@ -242,7 +242,7 @@ với win2k12_qemu_ga là tên máy ảo
 
 `root@controller1:# nova show win2k12_qemu_ga`
 
-với win2k12_qemu_ga là tên máy ảo
+với `win2k12_qemu_ga` là tên máy ảo
 
 Kết quả:
 ```
