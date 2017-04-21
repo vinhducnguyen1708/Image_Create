@@ -220,15 +220,29 @@ openstack image create Win2k12 --disk-format qcow2 --container-format bare --pub
 ### 3.5. Chỉnh sửa metadata của image upload
 ![Create VM 46](/images/win2k12_standard/win2k12_47.jpg)
 
-Thêm 2 metadata là 'hw_qemu_guest_agent' và 'os_admin_user', set giá trị là True, sau đó save lại
+Thêm 2 metadata là 'hw_qemu_guest_agent' và 'os_type', với giá trị tương ứng là `true` và `windows`, sau đó save lại
 ![Create VM 47](/images/win2k12_standard/win2k12_48.jpg)
 
 ### 3.6. Image đã sẵn sàng để launch máy ảo.
 
 ## 4. Thử nghiệm việc đổi password máy ảo (sau đã đã tạo máy ảo)
-### 4.1. Xác định vị trí máy ảo đang nằm trên node compute nào. VD máy ảo đang sử dụng là `win2k12_qemu_ga`
+### Cách 1: sử dụng nova API
+Trên node Controller, thực hiện lệnh và nhập password cần đổi
 
-`nova show win2k12_qemu_ga`
+```
+root@controller1:# nova set-password win2k12_qemu_ga
+New password: 
+Again: 
+```
+với win2k12_qemu_ga là tên máy ảo
+
+
+### Cách 2: sử dụng trực tiếp libvirt
+#### Xác định vị trí máy ảo đang nằm trên node compute nào. VD máy ảo đang sử dụng là `win2k12_qemu_ga`
+
+`root@controller1:# nova show win2k12_qemu_ga`
+
+với win2k12_qemu_ga là tên máy ảo
 
 Kết quả:
 ```
@@ -245,30 +259,30 @@ Kết quả:
 
 Như vậy máy ảo nằm trên node compute6 với KVM name là `instance-00001827`
 
-### 4.2. Trên compute6, kiểm tra để tìm file socket kết nối tới máy ảo
+#### Trên compute6, kiểm tra để tìm file socket kết nối tới máy ảo
 ```
 root@compute6:~# bash -c  "ls /var/lib/libvirt/qemu/*.sock"
 ```
 
 Kết quả:
 ```
-/var/lib/libvirt/qemu/org.qemu.guest_agent.0.instance-0000001d.sock
+/var/lib/libvirt/qemu/org.qemu.guest_agent.0.instance-00001827.sock
 
 instance-0000001d: tên của máy ảo trên KVM
 ```
 
 ```
-root@compute6:~# file /var/lib/libvirt/qemu/org.qemu.guest_agent.0.instance-0000001d.sock
+root@compute6:~# file /var/lib/libvirt/qemu/org.qemu.guest_agent.0.instance-00001827.sock
 ```
 
 Kết quả:
 ```
-/var/lib/libvirt/qemu/org.qemu.guest_agent.0.instance-0000001d.sock: socket
+/var/lib/libvirt/qemu/org.qemu.guest_agent.0.instance-00001827.sock: socket
 ```
 
-### 4.3. Kiểm tra kết nối tới máy ảo. Ở trên node compute chứa máy ảo (compute6), chạy lệnh:
+#### Kiểm tra kết nối tới máy ảo. Ở trên node compute chứa máy ảo (compute6), chạy lệnh:
 ```
-root@compute6:~# virsh qemu-agent-command instance-0000181b '{"execute":"guest-ping"}'
+root@compute6:~# virsh qemu-agent-command instance-00001827 '{"execute":"guest-ping"}'
 ```
 
 Kết quả:
@@ -276,7 +290,7 @@ Kết quả:
 {"return":{}}
 ```
 
-### 4.4. Sinh password mới `123456a@` (password phải đáp ứng yêu cầu phức tạp của Windows)
+#### Sinh password mới `123456a@` (password phải đáp ứng yêu cầu phức tạp của Windows)
 ```
 echo -n "123456a@" | base64
 ```
@@ -286,9 +300,9 @@ Kết quả:
 MTIzNDU2YUA=
 ```
 
-### 4.5. Ở trên node compute chứa máy ảo (compute6), chèn password mới vào máy ảo, lưu ý máy ảo phải đang bật
+#### Ở trên node compute chứa máy ảo (compute6), chèn password mới vào máy ảo, lưu ý máy ảo phải đang bật
 ```
-root@compute6:~# virsh  qemu-agent-command instance-0000181b '{ "execute": "guest-set-user-password","arguments": { "crypted": false,"username": "administrator","password": "MTIzNDU2YUA=" } }'
+root@compute6:~# virsh  qemu-agent-command instance-00001827 '{ "execute": "guest-set-user-password","arguments": { "crypted": false,"username": "administrator","password": "MTIzNDU2YUA=" } }'
 ```
 
 Kết quả;
