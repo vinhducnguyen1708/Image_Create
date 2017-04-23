@@ -8,7 +8,7 @@
 
 ## 1. Thực hiện trên máy ảo
 ### 1.1. Cấu hình card eth0 tự động active khi hệ thống boot-up
-vim /etc/sysconfig/network-script/ifcfg-eth0 :
+vim /etc/sysconfig/network-scripts/ifcfg-eth0 :
 ```
 ONBOOT=yes
 ```

@@ -18,83 +18,83 @@ openstack image create ubuntu-14.04.5.iso --disk-format iso --container-format b
 
 ### 1.2. Truy cập vào dashboard của OpenStack và tạo máy ảo trên file ISO vừa đẩy
 
-![Đặt tên máy ảo](/images/buildVM_fromISO_1.jpg)
+![Đặt tên máy ảo](/images/buildVM_fromISO/buildVM_fromISO_1.jpg)
 
-![Chọn file ISO](/images/buildVM_fromISO_2.jpg)
+![Chọn file ISO](/images/buildVM_fromISO/buildVM_fromISO_2.jpg)
 
-![Chọn cấu hình](/images/buildVM_fromISO_3.jpg)
+![Chọn cấu hình](/images/buildVM_fromISO/buildVM_fromISO_3.jpg)
 
 ### 1.3. Đợi đến khi máy ảo chuyển trạng thái sang active, tạo một volume trống (20GB) và gắn vào máy ảo
 
-![Tao volume](/images/buildVM_fromISO_5.jpg)
+![Tao volume](/images/buildVM_fromISO/buildVM_fromISO_5.jpg)
 
-![Gắn volume](/images/buildVM_fromISO_6.jpg)
+![Gắn volume](/images/buildVM_fromISO/buildVM_fromISO_6.jpg)
 
 ### 1.4. Click vào "Console" để truy cập vào cửa sổ console của máy ảo
 
-![console VM](/images/buildVM_fromISO_4.jpg)
+![console VM](/images/buildVM_fromISO/buildVM_fromISO_4.jpg)
 
 ### 1.5. Tiến hành cài đặt OS như bình thường, ở phần `Partition disks`, chọn `Manual`
 
-![disk manual](/images/buildVM_fromISO_7.jpg)
+![disk manual](/images/buildVM_fromISO/buildVM_fromISO_7.jpg)
 
 ### 1.6. Chọn virtual disk 1 (là volume vừa gắn thêm vào)
 
-![choose disk](/images/buildVM_fromISO_8.jpg)
+![choose disk](/images/buildVM_fromISO/buildVM_fromISO_8.jpg)
 
 ### 1.7. Chọn vào dòng `pri/log`
 
-![free space](/images/buildVM_fromISO_9.jpg)
+![free space](/images/buildVM_fromISO/buildVM_fromISO_9.jpg)
 
 ### 1.8. Tạo partition mới trên disk cho root, sử dụng toàn bộ dung lượng ổ đĩa, loại primary partition
 
-![new partition](/images/buildVM_fromISO_10.jpg)
+![new partition](/images/buildVM_fromISO/buildVM_fromISO_10.jpg)
 
-![size partition](/images/buildVM_fromISO_11.jpg)
+![size partition](/images/buildVM_fromISO/buildVM_fromISO_11.jpg)
 
-![primary partition](/images/buildVM_fromISO_12.jpg)
+![primary partition](/images/buildVM_fromISO/buildVM_fromISO_12.jpg)
 
 ### 1.9. Chọn mount point là `/`, format `ext4`, sau đó `Done setting up the partition`
 
-![format partition](/images/buildVM_fromISO_13.jpg)
+![format partition](/images/buildVM_fromISO/buildVM_fromISO_13.jpg)
 
 ### 1.10. Chọn `Finish partitioning and write changes to disk`
 
-![finish partition](/images/buildVM_fromISO_14.jpg)
+![finish partition](/images/buildVM_fromISO/buildVM_fromISO_14.jpg)
 
 #### Đồng ý không sử dụng swap disk
 
-![no swap](/images/buildVM_fromISO_15.jpg)
+![no swap](/images/buildVM_fromISO/buildVM_fromISO_15.jpg)
 
-![write change](/images/buildVM_fromISO_16.jpg)
+![write change](/images/buildVM_fromISO/buildVM_fromISO_16.jpg)
 
 #### Không chọn `HTTP proxy` và `Continue`
 
-![no proxy](/images/buildVM_fromISO_17.jpg)
+![no proxy](/images/buildVM_fromISO/buildVM_fromISO_17.jpg)
 
 #### Chọn `No automatic update`
 
-![no auto update](/images/buildVM_fromISO_18.jpg)
+![no auto update](/images/buildVM_fromISO/buildVM_fromISO_18.jpg)
 
 #### Không cài đặt software
 
-![no install software](/images/buildVM_fromISO_19.jpg)
+![no install software](/images/buildVM_fromISO/buildVM_fromISO_19.jpg)
 
 #### Cài đặt GRUB bootloader
 
-![install GRUB](/images/buildVM_fromISO_20.jpg)
+![install GRUB](/images/buildVM_fromISO/buildVM_fromISO_20.jpg)
 
 #### Khởi động lại VM
 
-![restart VM](/images/buildVM_fromISO_21.jpg)
+![restart VM](/images/buildVM_fromISO/buildVM_fromISO_21.jpg)
 
 ### 1.11. Sau khi khởi động lại vào màn hình cài đặt, nhấn `ESC` để lựa chọn `Boot from first hard disk`
 
-![boot hard disk](/images/buildVM_fromISO_22.jpg)
+![boot hard disk](/images/buildVM_fromISO/buildVM_fromISO_22.jpg)
 
 ### 1.12. Sử dụng tài khoản khai báo ban đầu để login vào VM
 
-![login VM](/images/buildVM_fromISO_23.jpg)
+![login VM](/images/buildVM_fromISO/buildVM_fromISO_23.jpg)
 
 
 ## 2. Cài đặt các công cụ để xử lý VM
@@ -116,19 +116,19 @@ sudo init 0
 ## 3. Đóng gói image
 ### 3.1. Xóa máy ảo và gỡ volume khỏi máy ảo, sau đó upload volume `u14-iso-vol` lên Glance
 
-![upload volume](/images/buildVM_fromISO_24.jpg)
+![upload volume](/images/buildVM_fromISO/buildVM_fromISO_24.jpg)
 
-![upload volume](/images/buildVM_fromISO_25.jpg)
+![upload volume](/images/buildVM_fromISO/buildVM_fromISO_25.jpg)
 
 ### 3.2. Kiểm tra image đã upload thành công hay chưa
 
-![image](/images/buildVM_fromISO_26.jpg)
+![image](/images/buildVM_fromISO/buildVM_fromISO_26.jpg)
 
 ### 3.3. Chỉnh sửa metadata của image upload
-![view metadata](/images/buildVM_fromISO_27.jpg)
+![view metadata](/images/buildVM_fromISO/buildVM_fromISO_27.jpg)
 
 Thêm 2 metadata là 'hw_qemu_guest_agent' và 'os_admin_user', set giá trị là True, sau đó save lại
-![update metadata](/images/buildVM_fromISO_28.jpg)
+![update metadata](/images/buildVM_fromISO/buildVM_fromISO_28.jpg)
 
 ### 3.4. Xóa volume `u14-iso-vol`, Image đã sẵn sàng để launch máy ảo.
 
