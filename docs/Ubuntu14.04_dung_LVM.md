@@ -3,7 +3,6 @@
  - Hướng dẫn này dành cho các image được cấu hình sẵn LVM cho các phân vùng /boot, /root, /swap
  - Sử dụng hướng dẫn này sau khi đã cài đặt xong OS trên image
  - Sử dụng công cụ `virt-manager` để kết nối tới console máy ảo
- - Hướng dẫn sử dụng công cụ qemu-guest-agent (> 2.3.0) cài đặt trong image để thay đổi password từ host KVM
  - Hướng dẫn bao gồm 2 phần chính: thực hiện trên máy ảo cài OS và thực hiện trên KVM Host
 
 
@@ -79,40 +78,7 @@ chmod +x /etc/netplug.d/netplug
 echo "NOZEROCONF=yes" >> /etc/sysconfig/network
 ```
 
-### 1.9. Cài đặt `qemu-guest-agent`
-#### *Chú ý: qemu-guest-agent là một daemon chạy trong máy ảo, giúp quản lý và hỗ trợ máy ảo khi cần (có thể cân nhắc việc cài thành phần này lên máy ảo)*
-```
-apt-get install qemu-guest-agent -y
-```
-#### Kiểm tra phiên bản `qemu-ga` bằng lệnh:
-```
-qemu-ga --version
-```
 
-Kết quả:
-```
-QEMU Guest Agent 2.5.0
-```
-
-### 1.10. Cấu hình thư mục chứa file log của `qemu-ga`
-```
-mkdir /var/log/qemu-agent
-sudo tee /etc/default/qemu-guest-agent > /dev/null <<EOF
-#Cấu hình này để qemu-agent thực thi 1 script được đặt tại thư mục /etc/qemu/fsfreeze-hook, script này sẽ bắt các action từ KVM host gửi tới VM thông qua qemu-guest-agent, sau đó tự động phun ra log
-DAEMON_ARGS="--logfile /var/log/qemu-agent/org.qemu.guest_agent.0.log --fsfreeze-hook --verbose"
-EOF
-service qemu-guest-agent restart
-```
-
-Kiểm tra bằng lệnh:
-```
-ls /var/log/qemu-agent/
-```
-
-Kết quả:
-```
-org.qemu.guest_agent.0.log
-```
 
 ###### Cleaning and Poweroff
 ```
@@ -128,28 +94,23 @@ apt-get install libguestfs-tools -y
 
 ### 2.2. Xử dụng lệnh `virt-sysprep` để xóa toàn bộ các thông tin máy ảo:
 ```
-virt-sysprep -a CentOS65.img
+virt-sysprep -a U.1404.img
 ```
 
 ### 2.3. Giảm kích thước image
 ```
-sudo virt-sparsify --compress CentOS65.img CentOS65_shrink.img
+virt-sparsify --compress U.1404.img U.1404.shrink.img
 ```
 
 ### 2.4. Upload image lên glance
 ```
-openstack image create CentOS_6.5 --disk-format qcow2 --container-format bare --public < CentOS65_shrink.img
+openstack image create U14.04_v4 --disk-format qcow2 --container-format bare --public < U.1404.shrink.img
 ```
 
 ### 2.5. Kiểm tra việc upload image đã thành công hay chưa
 
-![upload image](/images/cent65_1.jpg)
+![upload image](/images/u1404/u1404_1.jpg)
 
-### 2.6. Chỉnh sửa metadata của image upload
-![view metadata](/images/cent65_2.jpg)
-
-Thêm 2 metadata là 'hw_qemu_guest_agent' và 'os_admin_user', set giá trị là True, sau đó save lại
-![update metadata](/images/cent65_3.jpg)
 
 ### 2.7. Image đã sẵn sàng để launch máy ảo.
 
@@ -168,58 +129,5 @@ Sau khi chạy Script, VM sẽ khởi động lại, quá trình định dạng 
 ### 3.3. Kiểm tra lại kích thước LV:
 ![Kiểm tra LV](http://image.prntscr.com/image/c3402824909a41a29a5b4e74e8f367eb.jpg)
 
-## 4. Thử nghiệm việc đổi password máy ảo (sau đã đã tạo máy ảo)
-### 4.1. Kiểm tra trên máy Host KVM để tìm file socket kết nối tới máy ảo
-```
-bash -c  "ls /var/lib/libvirt/qemu/*.sock"
-```
-
-Kết quả:
-```
-/var/lib/libvirt/qemu/org.qemu.guest_agent.0.instance-0000001d.sock
-
-instance-0000001d: tên của máy ảo trên KVM
-```
-
-```
-file /var/lib/libvirt/qemu/org.qemu.guest_agent.0.instance-0000001d.sock
-```
-
-Kết quả:
-```
-/var/lib/libvirt/qemu/org.qemu.guest_agent.0.instance-0000001d.sock: socket
-```
-
-### 4.2. Kiểm tra kết nối tới máy ảo
-```
-virsh qemu-agent-command instance-0000001d '{"execute":"guest-ping"}'
-```
-
-Kết quả:
-```
-{"return":{}}
-```
-
-### 4.3. Sinh password mới `new`
-```
-echo -n "new" | base64
-```
-
-Kết quả:
-```
-YQ==
-```
-
-### 4.4. Chèn password mới vào máy ảo, lưu ý máy ảo phải đang bật
-```
-virsh  qemu-agent-command instance-0000001d '{ "execute": "guest-set-user-password","arguments": { "crypted": false,"username": "root","password": "YQ==" } }'
-```
-
-Kết quả;
-```
-{"return":{}}
-```
-
-Thử đăng nhập vào máy ảo với password `new`
 
 ## Done
