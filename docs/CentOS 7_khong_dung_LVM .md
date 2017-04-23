@@ -142,6 +142,11 @@ Khởi chạy qemu-guest-agent
 systemctl start qemu-guest-agent
 ```
 
+Khởi chạy qemu-guest-agent khi boot máy
+```
+systemctl enable qemu-guest-agent
+```
+
 ### 2.8. Disable default config route
 ```
 echo "NOZEROCONF=yes" >> /etc/sysconfig/network
