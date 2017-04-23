@@ -78,6 +78,16 @@ chmod +x /etc/netplug.d/netplug
 echo "NOZEROCONF=yes" >> /etc/sysconfig/network
 ```
 
+### 1.9. Cấu hình card mạng tự động active khi hệ thống boot-up
+
+`vim /etc/network/interfaces`
+
+```
+auto lo
+iface lo inet loopback
+auto eth0
+iface eth0 inet dhcp
+```
 
 
 ###### Cleaning and Poweroff

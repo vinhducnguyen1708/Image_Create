@@ -111,6 +111,17 @@ Kết quả:
 * qemu-ga is running
 ```
 
+### 2.9. Cấu hình card mạng tự động active khi hệ thống boot-up
+
+`vim /etc/network/interfaces`
+
+```
+auto lo
+iface lo inet loopback
+auto eth0
+iface eth0 inet dhcp
+```
+
 ##### Tắt máy ảo 
 ```
 init 0
