@@ -149,7 +149,7 @@ Thêm 2 metadata là 'hw_qemu_guest_agent' và 'os_type', với giá trị tươ
 
 ### 3.7. Image đã sẵn sàng để launch máy ảo.
 
-## 4. Thử nghiệm việc đổi password máy ảo (sau đã đã tạo máy ảo)
+## 4. Thử nghiệm việc đổi password máy ảo (sau khi đã tạo máy ảo)
 ### Cách 1: sử dụng nova API (lưu ý máy ảo phải đang bật)
 Trên node Controller, thực hiện lệnh và nhập password cần đổi
 

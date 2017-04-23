@@ -10,9 +10,9 @@
 ### 1.1. Tắt máy ảo
 
 ### 1.2. Chỉnh sửa file .xml của máy ảo, bổ sung thêm channel (để máy host giao tiếp với máy ảo sử dụng qemu-guest-agent), sau đó save lại
-`virsh edit U1404`
+`virsh edit cent7`
 
-với `U1404` là tên máy ảo
+với `cent7` là tên máy ảo
 ```
 ...
  <channel type='unix'>
@@ -59,7 +59,6 @@ ifup eth0
 
 ### 2.2. Cài đặt ```cloud-utils-growpart``` để resize đĩa cứng lần đầu boot
 ```
-rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 yum update -y
 yum install -y epel-release
 yum install cloud-utils-growpart dracut-modules-growroot cloud-init -y
@@ -92,6 +91,8 @@ system_info:
 ```
 
 ### 2.6. Update selinux 3.13.1 (để có thể change passwd qua qemu-ga)
+Tải phiên bản selinux 3.13.1
+
 ```
 yum install wget -y
 wget ftp://fr2.rpmfind.net/linux/fedora/linux/updates/22/x86_64/s/selinux-policy-3.13.1-128.28.fc22.noarch.rpm
@@ -110,6 +111,7 @@ rpm -i /root/selinux-policy-targeted-3.13.1-128.28.fc22.noarch.rpm
 ```
 
 Kiểm tra lại phiên bản selinux
+
 `rpm -qa | grep -i selinux-policy`
 
 Kết quả:
@@ -202,7 +204,7 @@ Thêm 2 metadata là 'hw_qemu_guest_agent' và 'os_type', với giá trị tươ
 
 ### 3.7. Image đã sẵn sàng để launch máy ảo.
 
-## 4. Thử nghiệm việc đổi password máy ảo (sau đã đã tạo máy ảo)
+## 4. Thử nghiệm việc đổi password máy ảo (sau khi đã tạo máy ảo)
 ### Cách 1: sử dụng nova API (lưu ý máy ảo phải đang bật)
 Trên node Controller, thực hiện lệnh và nhập password cần đổi
 
@@ -228,7 +230,7 @@ Kết quả:
 | OS-DCF:diskConfig                    | MANUAL                                                                           |
 | OS-EXT-AZ:availability_zone          | nova                                                                             |
 | OS-EXT-SRV-ATTR:host                 | compute3		                                                                  |
-| OS-EXT-SRV-ATTR:hostname             | u1404-qemu-ga                                                                  |
+| OS-EXT-SRV-ATTR:hostname             | cent7-qemu-ga                                                                  |
 | OS-EXT-SRV-ATTR:hypervisor_hostname  | compute3                                                                       |
 | OS-EXT-SRV-ATTR:instance_name        | instance-0000008a                                             
 ```
