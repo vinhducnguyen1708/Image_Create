@@ -124,12 +124,10 @@ sudo init 0
 
 ![image](/images/buildVM_fromISO/buildVM_fromISO_26.jpg)
 
-### 3.3. Chỉnh sửa metadata của image upload
-![view metadata](/images/buildVM_fromISO/buildVM_fromISO_27.jpg)
-
-Thêm 2 metadata là 'hw_qemu_guest_agent' và 'os_admin_user', set giá trị là True, sau đó save lại
-![update metadata](/images/buildVM_fromISO/buildVM_fromISO_28.jpg)
-
-### 3.4. Xóa volume `u14-iso-vol`, Image đã sẵn sàng để launch máy ảo.
+### 3.3. Xóa volume `u14-iso-vol`, Image đã sẵn sàng để launch máy ảo.
 
 ## Done
+
+Tham khảo:
+
+[1] - https://github.com/alexoughton/rtd-openstack-xenserver/blob/master/docs/24-create-kvm-centos-7-image.rst
