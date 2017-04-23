@@ -85,7 +85,7 @@ Comment dòng `link-local 169.254.0.0` trong `/etc/networks`
 ### 2.7. Cài đặt `qemu-guest-agent`
 #### *Chú ý: qemu-guest-agent là một daemon chạy trong máy ảo, giúp quản lý và hỗ trợ máy ảo khi cần (có thể cân nhắc việc cài thành phần này lên máy ảo)*
 #### *Để có thể thay đổi password máy ảo thì phiên bản qemu-guest-agent phải >= 2.5.0*
-
+```
 apt-get install software-properties-common -y
 add-apt-repository cloud-archive:mitaka -y
 apt-get update
