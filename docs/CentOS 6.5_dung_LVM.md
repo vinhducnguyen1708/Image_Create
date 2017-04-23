@@ -106,15 +106,9 @@ openstack image create CentOS_6.5 --disk-format qcow2 --container-format bare --
 
 ### 2.5. Kiểm tra việc upload image đã thành công hay chưa
 
-![upload image](/images/cent65_1.jpg)
+![upload image](/images/cent6.5/cent65_1.jpg)
 
-### 2.6. Chỉnh sửa metadata của image upload
-![view metadata](/images/cent65_2.jpg)
-
-Thêm 2 metadata là 'hw_qemu_guest_agent' và 'os_admin_user', set giá trị là True, sau đó save lại
-![update metadata](/images/cent65_3.jpg)
-
-### 2.7. Image đã sẵn sàng để launch máy ảo.
+### Image đã sẵn sàng để launch máy ảo.
 
 ## 3. Boot máy ảo (Trên OpenStack)
 ### 3.1. Sau khi Login vào máy ảo, kiểm tra dung lượng LVM:
