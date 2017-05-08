@@ -10,7 +10,7 @@
 ## 1. Trên Host KVM
 ### 1.1. Tắt máy ảo
 
-### 1.2. Chỉnh sửa file .xml của máy ảo, bổ sung thêm channel trong <devices> (để máy host giao tiếp với máy ảo sử dụng qemu-guest-agent), sau đó save lại
+### 1.2. Chỉnh sửa file .xml của máy ảo, bổ sung thêm channel trong `<devices>` (để máy host giao tiếp với máy ảo sử dụng qemu-guest-agent), sau đó save lại
 `virsh edit U1404`
 
 với `U1404` là tên máy ảo

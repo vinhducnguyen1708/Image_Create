@@ -47,7 +47,7 @@ chmod 0755 /var/www/ftp/iso/virtio-win.iso
 ### 1.12. Tắt máy ảo
 ![Create VM 9](/images/win2k12_standard/win2k12_9.jpg)
 
-### 1.13. Chỉnh sửa file .xml của máy ảo, bổ sung thêm channel trong <devices> (để máy host giao tiếp với máy ảo sử dụng qemu-guest-agent), sau đó save lại
+### 1.13. Chỉnh sửa file .xml của máy ảo, bổ sung thêm channel trong `<devices>` (để máy host giao tiếp với máy ảo sử dụng qemu-guest-agent), sau đó save lại
 `virsh edit Win2012`
 
 với `Win2012` là tên máy ảo
