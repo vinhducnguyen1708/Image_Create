@@ -10,17 +10,18 @@
 ## 1. Trên Host KVM
 ### 1.1. Tắt máy ảo
 
-### 1.2. Chỉnh sửa file .xml của máy ảo, bổ sung thêm channel (để máy host giao tiếp với máy ảo sử dụng qemu-guest-agent), sau đó save lại
+### 1.2. Chỉnh sửa file .xml của máy ảo, bổ sung thêm channel trong <devices> (để máy host giao tiếp với máy ảo sử dụng qemu-guest-agent), sau đó save lại
 `virsh edit U1404`
 
 với `U1404` là tên máy ảo
 ```
 ...
+<devices>
  <channel type='unix'>
       <target type='virtio' name='org.qemu.guest_agent.0'/>
       <address type='virtio-serial' controller='0' bus='0' port='1'/>
  </channel>
-
+</devices>
 ```
 
 ### 1.3. Dùng `vim` để sửa file `/etc/apparmor.d/abstractions/libvirt-qemu`
