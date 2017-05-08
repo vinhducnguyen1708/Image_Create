@@ -61,7 +61,13 @@ với `Win2012` là tên máy ảo
 </devices>
 ```
 
-### 1.14. Dùng `vim` để sửa file `/etc/apparmor.d/abstractions/libvirt-qemu`
+### 1.14. Tạo thêm thư mục cho channel vừa tạo và phân quyền cho thư mục đó
+```
+mkdir -p /var/lib/libvirt/qemu/channel/target
+chown -R libvirt-qemu:kvm /var/lib/libvirt/qemu/channel
+```
+
+### 1.15. Dùng `vim` để sửa file `/etc/apparmor.d/abstractions/libvirt-qemu`
 `vim /etc/apparmor.d/abstractions/libvirt-qemu`
 
 Bổ sung thêm cấu hình sau vào dòng cuối cùng
@@ -76,17 +82,17 @@ service libvirt-bin restart
 service apparmor reload
 ```
 
-### 1.15. Bật máy ảo để cài đặt OS
+### 1.16. Bật máy ảo để cài đặt OS
 ![Create VM 10](/images/win2k12_standard/win2k12_10.png)
 
-### 1.16. Lựa chọn phiên bản cài đặt (Windows Server 2012 R2 Standard Evaluation GUI)
+### 1.17. Lựa chọn phiên bản cài đặt (Windows Server 2012 R2 Standard Evaluation GUI)
 ![Create VM 11](/images/win2k12_standard/win2k12_11.jpg)
 ![Create VM 12](/images/win2k12_standard/win2k12_12.jpg)
 
-### 1.17. Lựa chọn chỉ cài đặt Windows không tự động Upgrade
+### 1.18. Lựa chọn chỉ cài đặt Windows không tự động Upgrade
 ![Create VM 13](/images/win2k12_standard/win2k12_13.jpg)
 
-### 1.18. Máy ảo sẽ không tự động load ổ đĩa cứng
+### 1.19. Máy ảo sẽ không tự động load ổ đĩa cứng
 ![Create VM 14](/images/win2k12_standard/win2k12_14.jpg)
 
 Đưa ISO"virtio-win.iso" vào CD ROM trống đã gắn ban đầu
@@ -99,11 +105,11 @@ Chọn Driver storage cho Windows 2k12R2
 ![Create VM 17](/images/win2k12_standard/win2k12_18.jpg)
 ![Create VM 18](/images/win2k12_standard/win2k12_19.jpg)
 
-### 1.19. Lúc này máy ảo đã nhận ổ đĩa, tiến hành cài đặt OS, làm theo các hướng dẫn để cài như bình thường
+### 1.20. Lúc này máy ảo đã nhận ổ đĩa, tiến hành cài đặt OS, làm theo các hướng dẫn để cài như bình thường
 ![Create VM 19](/images/win2k12_standard/win2k12_20.jpg)
 ![Create VM 20](/images/win2k12_standard/win2k12_21.jpg)
 
-### 1.20. Sau khi cài xong OS, tắt VM và sửa lại Boot Options, lựa chọn Boot từ Hard Disk và bật máy ảo
+### 1.21. Sau khi cài xong OS, tắt VM và sửa lại Boot Options, lựa chọn Boot từ Hard Disk và bật máy ảo
 ![Create VM 21](/images/win2k12_standard/win2k12_22.jpg)
 
 ## 2. Xử lý image sau khi đã cài xong OS

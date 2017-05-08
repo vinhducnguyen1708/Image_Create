@@ -23,7 +23,13 @@ với `cent7` là tên máy ảo
 </devices>
 ```
 
-### 1.3. Dùng `vim` để sửa file `/etc/apparmor.d/abstractions/libvirt-qemu`
+### 1.3. Tạo thêm thư mục cho channel vừa tạo và phân quyền cho thư mục đó
+```
+mkdir -p /var/lib/libvirt/qemu/channel/target
+chown -R libvirt-qemu:kvm /var/lib/libvirt/qemu/channel
+```
+
+### 1.4. Dùng `vim` để sửa file `/etc/apparmor.d/abstractions/libvirt-qemu`
 `vim /etc/apparmor.d/abstractions/libvirt-qemu`
 
 Bổ sung thêm cấu hình sau vào dòng cuối cùng
@@ -38,7 +44,7 @@ service libvirt-bin restart
 service apparmor reload
 ```
 
-### 1.4. Bật máy ảo
+### 1.5. Bật máy ảo
 
 ## 2. Thực hiện trên máy ảo
 ### 2.1. Cấu hình card eth0 tự động active khi hệ thống boot-up
