@@ -62,38 +62,38 @@ yum install parted -y
 
 ### 1.6. Để sau khi boot máy ảo, có thể nhận đủ các NIC gắn vào:
 ```
-yum install netplug -y
-yum install wget -y
-wget https://raw.githubusercontent.com/longsube/Netplug-config/master/netplug_cent6.5 -O netplug
+apt-get install netplug -y
+wget https://raw.githubusercontent.com/longsube/Netplug-config/master/netplug
 ```
 
-### 1.7. Đưa file netplug vào thư mục /etc/netplug
+### 1.7. Chỉnh sửa file `/etc/default/grub` để bắn log ra trong quá trình tạo máy ảo
 ```
-mv netplug /etc/netplug.d/netplug
-chmod +x /etc/netplug.d/netplug
+GRUB_DEFAULT=0
+#GRUB_HIDDEN_TIMEOUT=0
+GRUB_HIDDEN_TIMEOUT_QUIET=true
+GRUB_TIMEOUT=2
+GRUB_DISTRIBUTOR=`lsb_release -i -s 2> /dev/null || echo Debian`
+GRUB_CMDLINE_LINUX_DEFAULT=""
+GRUB_CMDLINE_LINUX="console=tty0 console=ttyS0,115200n8"
 ```
+Sau đó chạy lệnh
+`update-grub`
 
-### 1.8. Disable default config route
+### 1.8. Xóa toàn bộ các thông tin về địa chỉ MAC của card mạng ảo:
 ```
-echo "NOZEROCONF=yes" >> /etc/sysconfig/network
+/etc/udev/rules.d/70-persistent-net.rules
+/lib/udev/rules.d/75-persistent-net-generator.rules
 ```
+Chú ý: không xóa 2 file này mà chỉ xóa nội dung 
 
-### 1.9. Cấu hình card mạng tự động active khi hệ thống boot-up
+### 1.9. Disable default config route
 
-`vim /etc/network/interfaces`
-
-```
-auto lo
-iface lo inet loopback
-auto eth0
-iface eth0 inet dhcp
-```
+Comment dòng `link-local 169.254.0.0` trong `/etc/networks`
 
 
-###### Cleaning and Poweroff
+##### 1.10. Tắt máy ảo 
 ```
-yum clean all
-poweroff
+init 0
 ```
 
 ## 2. Thực hiện trên Host KVM
