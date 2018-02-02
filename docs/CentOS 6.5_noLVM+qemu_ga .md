@@ -76,6 +76,10 @@ chmod +x /etc/netplug.d/netplug
 echo "NOZEROCONF=yes" >> /etc/sysconfig/network
 ```
 
+### 1.9. Disable việc sinh ra file 70-persistent-net.rules (để mỗi khi clone máy ảo sẽ không bị thay đổi label card mạng)
+```
+echo "#" > /lib/udev/rules.d/75-persistent-net-generator.rules
+```
 
 ###### Cleaning and Poweroff
 ```
