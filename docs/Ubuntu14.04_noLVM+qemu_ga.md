@@ -157,13 +157,13 @@ openstack image create U14.04_v4 --disk-format qcow2 --container-format bare --p
 
 ### 3.5. Kiểm tra việc upload image đã thành công hay chưa
 
-![upload image](/images/u1404/u1404_1.jpg)
+![upload image](../../images/u1404/u1404_1.jpg)
 
 ### 3.6. Chỉnh sửa metadata của image upload
-![view metadata](/images/u1404/u1404_2.jpg)
+![view metadata](../../images/u1404/u1404_2.jpg)
 
 Thêm 2 metadata là 'hw_qemu_guest_agent' và 'os_type', với giá trị tương ứng là `true` và `linux`, sau đó save lại
-![update metadata](/images/u1404/u1404_3.jpg)
+![update metadata](../../images/u1404/u1404_3.jpg)
 
 ### 3.7. Image đã sẵn sàng để launch máy ảo.
 
