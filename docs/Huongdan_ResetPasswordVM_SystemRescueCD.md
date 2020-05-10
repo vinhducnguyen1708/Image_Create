@@ -66,8 +66,11 @@ Lựa chọn option đầu tiên *Boot SystemRescueCD using default options*. VM
 ```sh
 fdisk -l
 ```
+
 Kết quả:
+
 ![resetpassword](/images/resetpassword/rp_4.png)
+
 Ta thấy ổ đĩa `/dev/vdb2` là ổ đĩa chứa OS máy ảo
 
 ### 3.3.2. Mount ổ đĩa chứa OS vào thư mục `/mnt/windows` để thao tác
