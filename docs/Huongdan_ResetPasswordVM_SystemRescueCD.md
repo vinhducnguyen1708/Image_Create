@@ -94,6 +94,7 @@ Lựa chọn option 1 - Xóa password máy ảo, khi này máy ảo sẽ tự đ
 ![resetpassword](/images/resetpassword/rp_5.png)
 
 Sau khi reset password xong, thoát và save
+
 ![resetpassword](/images/resetpassword/rp_6.png)
 
 ### 3.3.5. Trên host Controller, gỡ bỏ trạng thái Rescue của máy ảo
@@ -111,7 +112,9 @@ openstack server unrescue win2k12
 fdisk -l
 ```
 Kết quả:
+
 ![resetpassword](/images/resetpassword/rp_8.png)
+
 Ta thấy ổ đĩa `/dev/vdb1` là ổ đĩa chứa OS máy ảo
 
 ### 3.4.2. Mount ổ đĩa chứa OS vào thư mục `/mnt/root` để thao tác
