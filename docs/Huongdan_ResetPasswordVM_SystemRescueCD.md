@@ -133,8 +133,9 @@ chroot /mnt/root /bin/bash
 
 ### 3.4.4. Đặt password mới cho máy ảo
 ```sh
-password [new_password]
+passwd root
 ```
+
 
 ### 3.4.5. Trên host Controller, gỡ bỏ trạng thái Rescue của máy ảo
 ```sh
