@@ -10,9 +10,9 @@
 
 #### Cách thức thực hiện: 
  - Chỉnh sửa DB của OpenStack để gỡ được volume boot khỏi máy ảo.
- - Gắn volume boot vào 1 máy ảo khác có sẵn SystemRescueCD.
+ - Gắn 1 volume khác có sẵn SystemRescueCD vào máy ảo .
  - Thực hiện reset password.
- - Gắn lại volume boot vào máy ảo ban đầu, chỉnh sửa lại DB OpenStack để đưa máy ảo về trạng thái ban đầu.
+ - Gỡ volume SystemRescueCD khỏi máy ảo, chỉnh sửa lại DB OpenStack để đưa máy ảo về trạng thái ban đầu.
  - Boot máy ảo và đăng nhập bằng password mới.
 
 
@@ -40,21 +40,31 @@ Trong đó:
 Kết quả:
 ![resetpassword](/images/resetpassword/rp_12.png)
 
-### 1.5. Gỡ volume boot khỏi máy ảo
-![resetpassword](/images/resetpassword/rp_14.png)
-
-
-## 2. Tạo máy ảo SystemRescueCD
+## 2. Tạo Volume SystemRescueCD
 ### 2.1. Tạo image SystemRescueCD
 Thực hiện như hướng dẫn tại [đây](https://github.com/VNPT-SmartCloud-System/DongGoiImage_OpenStack/blob/master/docs/Huongdan_ResetPasswordVM_SystemRescueCD.md#1-systemrescuecd)
 
-### 2.2. Boot máy ảo với image SystemRescueCD vừa tạo
+### 2.2. Tạo volume với image SystemRescueCD vừa tạo
 ![resetpassword](/images/resetpassword/rp_13.png)
 
-### 2.3. Sau khi máy ảo SystemRescueCD start, tắt máy ảo và mount Volume boot vừa gỡ ở trên vào máy ảo SystemRescueCD
+### 2.3. Mount volume SystemRescueCD vào máy ảo
 ![resetpassword](/images/resetpassword/rp_15.png)
 
-### 2.4. Khởi động máy ảo SystemRescueCD
+### 2.4. Đăng nhập vào MySQL và thực hiện update bản ghi của Volume SystemRescueCD
+```sh
+MariaDB [nova]> use nova;
+MariaDB [nova]> update block_device_mapping set device_name = '/dev/vda', boot_index=1 where volume_id = '1c710e37-9eb1-49be-854b-e9c904a4fa59' and deleted = 0;       
+
+MariaDB [nova]> use cinder;
+MariaDB [cinder]> update volume_attachment set mountpoint='/dev/vda' where volume_id ='1c710e37-9eb1-49be-854b-e9c904a4fa59' and deleted=0;
+```
+Trong đó:
+ - `1c710e37-9eb1-49be-854b-e9c904a4fa59`: ID của Volume SystemRescueCD
+
+Kết quả:
+![resetpassword](/images/resetpassword/rp_14.png)
+
+### 2.5. Khởi động máy ảo
 
 
 ## 3. Thực hiện Reset password VM
@@ -65,10 +75,20 @@ Thực hiện như hướng dẫn tại [đây](https://github.com/longsube/Dong
 shutdown -h now
 ```
 
-### 3.2. Gỡ bỏ volume boot khỏi máy ảo SystemRescueCD và gắn lại vào máy ảo gốc
-![resetpassword](/images/resetpassword/rp_16.png)
+### 3.2. Đăng nhập vào MySQL và thực hiện update lại bản ghi của Volume SystemRescueCD
+```sh
+MariaDB [nova]> use nova;
+MariaDB [nova]> update block_device_mapping set device_name = '/dev/vdb', boot_index=1 where volume_id = '1c710e37-9eb1-49be-854b-e9c904a4fa59' and deleted = 0;       
 
-### 3.3. Trên host Controller, đăng nhập vào MySQL và thực hiện update lại bản ghi của Volume boot của máy ảo gốc
+MariaDB [nova]> use cinder;
+MariaDB [cinder]> update volume_attachment set mountpoint='/dev/vdb' where volume_id ='1c710e37-9eb1-49be-854b-e9c904a4fa59' and deleted=0;
+```
+Trong đó:
+ - `1c710e37-9eb1-49be-854b-e9c904a4fa59`: ID của Volume SystemRescueCD
+
+### 3.3. Gỡ bỏ volume SystemRescueCD khỏi máy ảo
+
+### 3.4. Trên host Controller, đăng nhập vào MySQL và thực hiện update lại bản ghi của Volume boot
 ```sh
 MariaDB [nova]> use nova;
 MariaDB [nova]> update block_device_mapping set device_name = '/dev/vda', boot_index=1 where volume_id = 'fe14c432-493e-42ca-970e-4b542fcf3cbf' and deleted = 0;       
@@ -88,4 +108,3 @@ Kết quả:
 
 # Tham khảo:
 - https://bugs.launchpad.net/nova/+bug/1396965
-
