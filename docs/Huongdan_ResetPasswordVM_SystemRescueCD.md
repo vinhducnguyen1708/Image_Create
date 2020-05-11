@@ -131,7 +131,7 @@ mount /dev/vdb1 /mnt/root
 chroot /mnt/root /bin/bash
 ```
 
-### 3.4.4. Đặt password mới cho máy ảo
+### 3.4.4. Đặt password mới cho `root` máy ảo
 ```sh
 passwd root
 ```
