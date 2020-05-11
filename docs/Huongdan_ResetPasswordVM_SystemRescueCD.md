@@ -27,6 +27,10 @@ isohybrid systemrescuecd-amd64-6.1.3.iso
 ```sh
 openstack image create --file systemrescuecd-amd64-6.1.3.iso --public systemrescuecd-amd64
 ```
+### 1.5. Đặt các metadata cho image
+```sh
+openstack image set --property hw_cdrom_bus=ide --property hw_disk_bus=ide systemrescuecd-amd64
+```
 
 ## 2. Cấu hình trên OpenStack
 Để thực hiện việc reset password máy ảo, ta sẽ sử dụng 1 tính năng của nova là Rescue VM. Tính năng này sẽ đặt máy ảo vào trạng thái Rescue, trong đó VM sẽ boot vào 1 image được chỉ định. Chi tiết về tính năng này có thể đọc tại [đây](https://docs.openstack.org/ocata/user-guide/cli-reboot-an-instance.html)
@@ -78,6 +82,8 @@ Ta thấy ổ đĩa `/dev/vdb2` là ổ đĩa chứa OS máy ảo
 mkdir /mnt/windows
 ntfs-3g /dev/vdb2 /mnt/windows
 ```
+
+Lưu ý: nếu xuất hiện lỗi `The NTFS partition is in an unsafe state. Please resume and shutdown Windows fully (no hibernation or fast restarting), or mount the volume read-only with the 'ro' mount option.`. có nghĩa là máy ảo đã không được shutdown tốt đẹp, lúc này cần khởi động lại máy ảo và shutdown lại để đảm bảo máy ảo shutdown thành công.
 
 ### 3.3.3. Chuyển tới thư mục chứa SAM database của Windows. Lưu ý: với Windows Server 2k12, SAM database được đặt tại `/Windows/System32/config`, các OS Windows khác cần kiểm tra lại đường dẫn trươc khi thao tác
 ```sh
@@ -131,10 +137,11 @@ mount /dev/vdb1 /mnt/root
 chroot /mnt/root /bin/bash
 ```
 
-### 3.4.4. Đặt password mới cho máy ảo
+### 3.4.4. Đặt password mới cho `root` máy ảo
 ```sh
-password [new_password]
+passwd root
 ```
+
 
 ### 3.4.5. Trên host Controller, gỡ bỏ trạng thái Rescue của máy ảo
 ```sh
