@@ -22,14 +22,14 @@
     ```
 - **Bước 2**: Tạo element 
     - Thực hiện tạo một element `magento-install` trong thư mục `/root/diskimage-builder/diskimage_builder/elements/`
-    - Tạo thư mục `post-install.d/`
-    - Tạo file script `magento-install`  trong thư mục `/root/diskimage-builder/diskimage_builder/elements/post-install.d/`
+    - Trong thư mục `/root/diskimage-builder/diskimage_builder/elements/magento-install` Tạo thư mục `post-install.d/`
+    - Tạo file script `magento-install`  trong thư mục `/root/diskimage-builder/diskimage_builder/elements/magento-install/post-install.d/`
      với nội dung:
         [SCRIPT TẠI ĐÂY](script/U16-script-magento.sh)
-    - Phân quyền `chmod +x mysql-install`
+    - Phân quyền `chmod +x magento-install`
 - **Bước 3**: Thưc hiện lệnh tạo image
    -    ```
-        DIB_RELEASE=xenial disk-image-create -a amd64 -o  ubuntu-16-DIB-magento -p openssh-server  ubuntu vm devuser mangento-install
+        DIB_RELEASE=xenial disk-image-create -a amd64 -o  ubuntu-16-DIB-magento -p openssh-server  ubuntu vm devuser mangento-install dhcp-all-interfaces
         ```
     - Trong đây bao gồm:
         
@@ -37,7 +37,7 @@
         - amd64: chip xử lý
         - ubuntu-16-DIB: tên image
         - openssh-server: package cài đặt ssh
-        - các elements: `ubuntu`, `vm`, `devuser`, `magento-install`
+        - các elements: `ubuntu`, `vm`, `devuser`, `magento-install`, `dhcp-all-interfaces`
 - **Bước 4**: Thực hiện upload lên Openstack qua file `ubuntu-16-DIB-wordpress.qcow2`
 
 - **Bước 5**: Vào dashboad khởi chạy máy ảo chứa Image. Trong bảng configuration

@@ -22,7 +22,7 @@
 
 - **Bước 2**: Thực hiện lệnh tạo image:
     - ```
-        DIB_RELEASE=xenial disk-image-create -a amd64 -o  ubuntu-16-DIB -p openssh-server  ubuntu vm devuser
+        DIB_RELEASE=xenial disk-image-create -a amd64 -o  ubuntu-16-DIB -p openssh-server  ubuntu vm devuser dhcp-all-interfaces
         ```
     - Trong đây bao gồm:
         
@@ -30,7 +30,7 @@
         - amd64: chip xử lý
         - ubuntu-16-DIB: tên image
         - openssh-server: package cài đặt ssh
-        - các elements: `ubuntu`, `vm`, `devuser`
+        - các elements: `ubuntu`, `vm`, `devuser`, `dhcp-all-interfaces`
 
 - **Bước 3**: Sau khi thực hiện chạy xong sẽ tạo ra file `ubuntu-16-DIB.qcow2`
 có thể upload lên Openstack.

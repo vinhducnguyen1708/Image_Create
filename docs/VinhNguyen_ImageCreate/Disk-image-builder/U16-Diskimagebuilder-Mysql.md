@@ -25,11 +25,11 @@
 - **Bước 2**:
 
     - Thực hiện tạo một element `mysql-install` trong thư mục `/root/diskimage-builder/diskimage_builder/elements/`
-    - Tạo thư mục `post-install.d/`
-    - Tạo file script `mysql-install`  trong thư mục `/root/diskimage-builder/diskimage_builder/elements/post-install.d/`
+    - Trong thư mục `/root/diskimage-builder/diskimage_builder/elements/mysql-install` Tạo thư mục `post-install.d/`
+    - Tạo file script `mysql-install`  trong thư mục `/root/diskimage-builder/diskimage_builder/elements/mysql-install/post-install.d/`
      với nội dung: 
 
-        ```
+        ```sh
         echo "$(tput setaf 2)##### install-MYSQL #####$(tput sgr0)"\
         sleep 3
         apt-get upgrade -y
@@ -45,7 +45,7 @@
 
 - **Bước 3**: Thực hiện lệnh tạo image:
     - ```
-        DIB_RELEASE=xenial disk-image-create -a amd64 -o  ubuntu-16-DIB-mysql -p openssh-server  ubuntu vm devuser mysql-install
+        DIB_RELEASE=xenial disk-image-create -a amd64 -o  ubuntu-16-DIB-mysql -p openssh-server  ubuntu vm devuser mysql-install dhcp-all-interfaces
         ```
     - Trong đây bao gồm:
         
@@ -53,6 +53,6 @@
         - amd64: chip xử lý
         - ubuntu-16-DIB: tên image
         - openssh-server: package cài đặt ssh
-        - các elements: `ubuntu`, `vm`, `devuser`, `mysql-install`
+        - các elements: `ubuntu`, `vm`, `devuser`, `mysql-install`, `dhcp-all-interfaces`
 - **Bước 3**: Thực hiện upload lên Openstack với file `ubuntu-16-DIB-mysql.qcow2`
 
